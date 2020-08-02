@@ -564,6 +564,76 @@ public class DatabaseInfoExample {
             addCriterion("updated_time not between", value1, value2, "updatedTime");
             return (Criteria) this;
         }
+
+        public Criteria andDatabaseTypeIsNull() {
+            addCriterion("database_type is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andDatabaseTypeIsNotNull() {
+            addCriterion("database_type is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andDatabaseTypeEqualTo(String value) {
+            addCriterion("database_type =", value, "databaseType");
+            return (Criteria) this;
+        }
+
+        public Criteria andDatabaseTypeNotEqualTo(String value) {
+            addCriterion("database_type <>", value, "databaseType");
+            return (Criteria) this;
+        }
+
+        public Criteria andDatabaseTypeGreaterThan(String value) {
+            addCriterion("database_type >", value, "databaseType");
+            return (Criteria) this;
+        }
+
+        public Criteria andDatabaseTypeGreaterThanOrEqualTo(String value) {
+            addCriterion("database_type >=", value, "databaseType");
+            return (Criteria) this;
+        }
+
+        public Criteria andDatabaseTypeLessThan(String value) {
+            addCriterion("database_type <", value, "databaseType");
+            return (Criteria) this;
+        }
+
+        public Criteria andDatabaseTypeLessThanOrEqualTo(String value) {
+            addCriterion("database_type <=", value, "databaseType");
+            return (Criteria) this;
+        }
+
+        public Criteria andDatabaseTypeLike(String value) {
+            addCriterion("database_type like", value, "databaseType");
+            return (Criteria) this;
+        }
+
+        public Criteria andDatabaseTypeNotLike(String value) {
+            addCriterion("database_type not like", value, "databaseType");
+            return (Criteria) this;
+        }
+
+        public Criteria andDatabaseTypeIn(List<String> values) {
+            addCriterion("database_type in", values, "databaseType");
+            return (Criteria) this;
+        }
+
+        public Criteria andDatabaseTypeNotIn(List<String> values) {
+            addCriterion("database_type not in", values, "databaseType");
+            return (Criteria) this;
+        }
+
+        public Criteria andDatabaseTypeBetween(String value1, String value2) {
+            addCriterion("database_type between", value1, value2, "databaseType");
+            return (Criteria) this;
+        }
+
+        public Criteria andDatabaseTypeNotBetween(String value1, String value2) {
+            addCriterion("database_type not between", value1, value2, "databaseType");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

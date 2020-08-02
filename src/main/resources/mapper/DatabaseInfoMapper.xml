@@ -9,6 +9,7 @@
     <result column="password" jdbcType="VARCHAR" property="password" />
     <result column="created_time" jdbcType="TIMESTAMP" property="createdTime" />
     <result column="updated_time" jdbcType="TIMESTAMP" property="updatedTime" />
+    <result column="database_type" jdbcType="VARCHAR" property="databaseType" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -69,7 +70,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, database_name, database_url, username, password, created_time, updated_time
+    id, database_name, database_url, username, password, created_time, updated_time, 
+    database_type
   </sql>
   <select id="selectByExample" parameterType="com.zhongruan.template.entity.DatabaseInfoExample" resultMap="BaseResultMap">
     select
@@ -94,10 +96,10 @@
   <insert id="insert" parameterType="com.zhongruan.template.entity.DatabaseInfo">
     insert into database_info (id, database_name, database_url, 
       username, password, created_time, 
-      updated_time)
+      updated_time, database_type)
     values (#{id,jdbcType=INTEGER}, #{databaseName,jdbcType=VARCHAR}, #{databaseUrl,jdbcType=VARCHAR}, 
       #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{createdTime,jdbcType=TIMESTAMP}, 
-      #{updatedTime,jdbcType=TIMESTAMP})
+      #{updatedTime,jdbcType=TIMESTAMP}, #{databaseType,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.zhongruan.template.entity.DatabaseInfo">
     insert into database_info
@@ -123,6 +125,9 @@
       <if test="updatedTime != null">
         updated_time,
       </if>
+      <if test="databaseType != null">
+        database_type,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -145,6 +150,9 @@
       </if>
       <if test="updatedTime != null">
         #{updatedTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="databaseType != null">
+        #{databaseType,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -178,6 +186,9 @@
       <if test="record.updatedTime != null">
         updated_time = #{record.updatedTime,jdbcType=TIMESTAMP},
       </if>
+      <if test="record.databaseType != null">
+        database_type = #{record.databaseType,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -191,7 +202,8 @@
       username = #{record.username,jdbcType=VARCHAR},
       password = #{record.password,jdbcType=VARCHAR},
       created_time = #{record.createdTime,jdbcType=TIMESTAMP},
-      updated_time = #{record.updatedTime,jdbcType=TIMESTAMP}
+      updated_time = #{record.updatedTime,jdbcType=TIMESTAMP},
+      database_type = #{record.databaseType,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>

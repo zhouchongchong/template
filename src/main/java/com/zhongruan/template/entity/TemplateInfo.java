@@ -1,7 +1,8 @@
 package com.zhongruan.template.entity;
 
-import java.util.Date;
+import org.apache.ibatis.annotations.Mapper;
 
+import java.util.Date;
 public class TemplateInfo {
     private Integer id;
 

@@ -17,6 +17,8 @@ public class DatabaseInfo {
 
     private Date updatedTime;
 
+    private String databaseType;
+
     public Integer getId() {
         return id;
     }
@@ -71,5 +73,13 @@ public class DatabaseInfo {
 
     public void setUpdatedTime(Date updatedTime) {
         this.updatedTime = updatedTime;
+    }
+
+    public String getDatabaseType() {
+        return databaseType;
+    }
+
+    public void setDatabaseType(String databaseType) {
+        this.databaseType = databaseType == null ? null : databaseType.trim();
     }
 }

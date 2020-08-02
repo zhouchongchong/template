@@ -23,4 +23,16 @@ public class TemplateInfoService {
 		final List<TemplateInfo> templateInfos = templateInfoMapper.selectByExample(templateInfoExample);
 		return templateInfos;
 	}
+	public List<TemplateInfo> findByName(String templateName){
+	    TemplateInfoExample templateInfoExample =new TemplateInfoExample();
+        TemplateInfoExample.Criteria criteria = templateInfoExample.createCriteria();
+        criteria.andTemplateNameLike("%"+templateName+"%");
+        List<TemplateInfo> templateInfos =null;
+        try{
+            templateInfos = templateInfoMapper.selectByExample(templateInfoExample);
+        }catch(Exception e){
+
+        }
+        return templateInfos;
+    }
 }

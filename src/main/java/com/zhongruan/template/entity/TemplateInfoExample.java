@@ -1,9 +1,10 @@
 package com.zhongruan.template.entity;
 
+import org.apache.ibatis.annotations.Mapper;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
 public class TemplateInfoExample {
     protected String orderByClause;
 
