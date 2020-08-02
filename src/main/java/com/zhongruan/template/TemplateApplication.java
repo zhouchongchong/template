@@ -5,7 +5,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-@MapperScan("com.zhongruan.template.mapper")
+@MapperScan("com.zhongruan.template")
 public class TemplateApplication {
 
 	public static void main(String[] args) {

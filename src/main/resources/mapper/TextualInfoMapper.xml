@@ -1,33 +1,33 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.zhongruan.template.mapper.TextualInfoMapper" >
-  <resultMap id="BaseResultMap" type="com.zhongruan.template.entity.TextualInfo" >
-    <result column="id" property="id" jdbcType="INTEGER" />
-    <result column="template_id" property="templateId" jdbcType="INTEGER" />
-    <result column="textual_name" property="textualName" jdbcType="VARCHAR" />
-    <result column="textual_url" property="textualUrl" jdbcType="VARCHAR" />
-    <result column="created_time" property="createdTime" jdbcType="TIMESTAMP" />
-    <result column="updated_time" property="updatedTime" jdbcType="TIMESTAMP" />
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhongruan.template.dao.TextualInfoMapper">
+  <resultMap id="BaseResultMap" type="com.zhongruan.template.entity.TextualInfo">
+    <result column="id" jdbcType="INTEGER" property="id" />
+    <result column="template_id" jdbcType="INTEGER" property="templateId" />
+    <result column="textual_name" jdbcType="VARCHAR" property="textualName" />
+    <result column="textual_url" jdbcType="VARCHAR" property="textualUrl" />
+    <result column="created_time" jdbcType="TIMESTAMP" property="createdTime" />
+    <result column="updated_time" jdbcType="TIMESTAMP" property="updatedTime" />
   </resultMap>
-  <sql id="Example_Where_Clause" >
-    <where >
-      <foreach collection="oredCriteria" item="criteria" separator="or" >
-        <if test="criteria.valid" >
-          <trim prefix="(" suffix=")" prefixOverrides="and" >
-            <foreach collection="criteria.criteria" item="criterion" >
-              <choose >
-                <when test="criterion.noValue" >
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
                   and ${criterion.condition}
                 </when>
-                <when test="criterion.singleValue" >
+                <when test="criterion.singleValue">
                   and ${criterion.condition} #{criterion.value}
                 </when>
-                <when test="criterion.betweenValue" >
+                <when test="criterion.betweenValue">
                   and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
                 </when>
-                <when test="criterion.listValue" >
+                <when test="criterion.listValue">
                   and ${criterion.condition}
-                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
                     #{listItem}
                   </foreach>
                 </when>
@@ -38,25 +38,25 @@
       </foreach>
     </where>
   </sql>
-  <sql id="Update_By_Example_Where_Clause" >
-    <where >
-      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
-        <if test="criteria.valid" >
-          <trim prefix="(" suffix=")" prefixOverrides="and" >
-            <foreach collection="criteria.criteria" item="criterion" >
-              <choose >
-                <when test="criterion.noValue" >
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
                   and ${criterion.condition}
                 </when>
-                <when test="criterion.singleValue" >
+                <when test="criterion.singleValue">
                   and ${criterion.condition} #{criterion.value}
                 </when>
-                <when test="criterion.betweenValue" >
+                <when test="criterion.betweenValue">
                   and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
                 </when>
-                <when test="criterion.listValue" >
+                <when test="criterion.listValue">
                   and ${criterion.condition}
-                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
                     #{listItem}
                   </foreach>
                 </when>
@@ -67,31 +67,30 @@
       </foreach>
     </where>
   </sql>
-  <sql id="Base_Column_List" >
+  <sql id="Base_Column_List">
     id, template_id, textual_name, textual_url, created_time, updated_time
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.zhongruan.template.example.TextualInfoExample" >
+  <select id="selectByExample" parameterType="com.zhongruan.template.entity.TextualInfoExample" resultMap="BaseResultMap">
     select
-    <if test="distinct" >
+    <if test="distinct">
       distinct
     </if>
-    'true' as QUERYID,
     <include refid="Base_Column_List" />
     from textual_info
-    <if test="_parameter != null" >
+    <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
-    <if test="orderByClause != null" >
+    <if test="orderByClause != null">
       order by ${orderByClause}
     </if>
   </select>
-  <delete id="deleteByExample" parameterType="com.zhongruan.template.example.TextualInfoExample" >
+  <delete id="deleteByExample" parameterType="com.zhongruan.template.entity.TextualInfoExample">
     delete from textual_info
-    <if test="_parameter != null" >
+    <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.zhongruan.template.entity.TextualInfo" >
+  <insert id="insert" parameterType="com.zhongruan.template.entity.TextualInfo">
     insert into textual_info (id, template_id, textual_name, 
       textual_url, created_time, updated_time
       )
@@ -99,82 +98,82 @@
       #{textualUrl,jdbcType=VARCHAR}, #{createdTime,jdbcType=TIMESTAMP}, #{updatedTime,jdbcType=TIMESTAMP}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.zhongruan.template.entity.TextualInfo" >
+  <insert id="insertSelective" parameterType="com.zhongruan.template.entity.TextualInfo">
     insert into textual_info
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
         id,
       </if>
-      <if test="templateId != null" >
+      <if test="templateId != null">
         template_id,
       </if>
-      <if test="textualName != null" >
+      <if test="textualName != null">
         textual_name,
       </if>
-      <if test="textualUrl != null" >
+      <if test="textualUrl != null">
         textual_url,
       </if>
-      <if test="createdTime != null" >
+      <if test="createdTime != null">
         created_time,
       </if>
-      <if test="updatedTime != null" >
+      <if test="updatedTime != null">
         updated_time,
       </if>
     </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
         #{id,jdbcType=INTEGER},
       </if>
-      <if test="templateId != null" >
+      <if test="templateId != null">
         #{templateId,jdbcType=INTEGER},
       </if>
-      <if test="textualName != null" >
+      <if test="textualName != null">
         #{textualName,jdbcType=VARCHAR},
       </if>
-      <if test="textualUrl != null" >
+      <if test="textualUrl != null">
         #{textualUrl,jdbcType=VARCHAR},
       </if>
-      <if test="createdTime != null" >
+      <if test="createdTime != null">
         #{createdTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="updatedTime != null" >
+      <if test="updatedTime != null">
         #{updatedTime,jdbcType=TIMESTAMP},
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.zhongruan.template.example.TextualInfoExample" resultType="java.lang.Integer" >
+  <select id="countByExample" parameterType="com.zhongruan.template.entity.TextualInfoExample" resultType="java.lang.Long">
     select count(*) from textual_info
-    <if test="_parameter != null" >
+    <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
-  <update id="updateByExampleSelective" parameterType="map" >
+  <update id="updateByExampleSelective" parameterType="map">
     update textual_info
-    <set >
-      <if test="record.id != null" >
+    <set>
+      <if test="record.id != null">
         id = #{record.id,jdbcType=INTEGER},
       </if>
-      <if test="record.templateId != null" >
+      <if test="record.templateId != null">
         template_id = #{record.templateId,jdbcType=INTEGER},
       </if>
-      <if test="record.textualName != null" >
+      <if test="record.textualName != null">
         textual_name = #{record.textualName,jdbcType=VARCHAR},
       </if>
-      <if test="record.textualUrl != null" >
+      <if test="record.textualUrl != null">
         textual_url = #{record.textualUrl,jdbcType=VARCHAR},
       </if>
-      <if test="record.createdTime != null" >
+      <if test="record.createdTime != null">
         created_time = #{record.createdTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="record.updatedTime != null" >
+      <if test="record.updatedTime != null">
         updated_time = #{record.updatedTime,jdbcType=TIMESTAMP},
       </if>
     </set>
-    <if test="_parameter != null" >
+    <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByExample" parameterType="map" >
+  <update id="updateByExample" parameterType="map">
     update textual_info
     set id = #{record.id,jdbcType=INTEGER},
       template_id = #{record.templateId,jdbcType=INTEGER},
@@ -182,9 +181,8 @@
       textual_url = #{record.textualUrl,jdbcType=VARCHAR},
       created_time = #{record.createdTime,jdbcType=TIMESTAMP},
       updated_time = #{record.updatedTime,jdbcType=TIMESTAMP}
-    <if test="_parameter != null" >
+    <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-
 </mapper>

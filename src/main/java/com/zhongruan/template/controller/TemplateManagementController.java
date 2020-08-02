@@ -16,13 +16,13 @@
  */
 package com.zhongruan.template.controller;
 
-import com.zhongruan.template.entity.TemplateInfo;
 import com.zhongruan.template.massage.ResultData;
-import com.zhongruan.template.service.TemplateManagementService;
+import com.zhongruan.template.service.TemplateInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * @author zhenxu.guan
@@ -32,13 +32,13 @@ import java.util.List;
 @RequestMapping("/templateInfo")
 public class TemplateManagementController {
     @Autowired
-    TemplateManagementService templateManagementService;
+    private TemplateInfoService templateInfoService;
     @ResponseBody
     @GetMapping("/findAll")
     public ResultData findAll(){
-        List<TemplateInfo> all = templateManagementService.findAll();
 
-        return ResultData.success(all);
+
+        return ResultData.success(templateInfoService.getAll());
 
 }
 

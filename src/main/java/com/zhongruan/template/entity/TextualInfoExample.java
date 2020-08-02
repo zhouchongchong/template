@@ -1,17 +1,17 @@
-package com.zhongruan.template.example;
+package com.zhongruan.template.entity;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class DatabaseInfoExample {
+public class TextualInfoExample {
     protected String orderByClause;
 
     protected boolean distinct;
 
     protected List<Criteria> oredCriteria;
 
-    public DatabaseInfoExample() {
+    public TextualInfoExample() {
         oredCriteria = new ArrayList<Criteria>();
     }
 
@@ -165,283 +165,203 @@ public class DatabaseInfoExample {
             return (Criteria) this;
         }
 
-        public Criteria andDatabaseNameIsNull() {
-            addCriterion("database_name is null");
+        public Criteria andTemplateIdIsNull() {
+            addCriterion("template_id is null");
             return (Criteria) this;
         }
 
-        public Criteria andDatabaseNameIsNotNull() {
-            addCriterion("database_name is not null");
+        public Criteria andTemplateIdIsNotNull() {
+            addCriterion("template_id is not null");
             return (Criteria) this;
         }
 
-        public Criteria andDatabaseNameEqualTo(String value) {
-            addCriterion("database_name =", value, "databaseName");
+        public Criteria andTemplateIdEqualTo(Integer value) {
+            addCriterion("template_id =", value, "templateId");
             return (Criteria) this;
         }
 
-        public Criteria andDatabaseNameNotEqualTo(String value) {
-            addCriterion("database_name <>", value, "databaseName");
+        public Criteria andTemplateIdNotEqualTo(Integer value) {
+            addCriterion("template_id <>", value, "templateId");
             return (Criteria) this;
         }
 
-        public Criteria andDatabaseNameGreaterThan(String value) {
-            addCriterion("database_name >", value, "databaseName");
+        public Criteria andTemplateIdGreaterThan(Integer value) {
+            addCriterion("template_id >", value, "templateId");
             return (Criteria) this;
         }
 
-        public Criteria andDatabaseNameGreaterThanOrEqualTo(String value) {
-            addCriterion("database_name >=", value, "databaseName");
+        public Criteria andTemplateIdGreaterThanOrEqualTo(Integer value) {
+            addCriterion("template_id >=", value, "templateId");
             return (Criteria) this;
         }
 
-        public Criteria andDatabaseNameLessThan(String value) {
-            addCriterion("database_name <", value, "databaseName");
+        public Criteria andTemplateIdLessThan(Integer value) {
+            addCriterion("template_id <", value, "templateId");
             return (Criteria) this;
         }
 
-        public Criteria andDatabaseNameLessThanOrEqualTo(String value) {
-            addCriterion("database_name <=", value, "databaseName");
+        public Criteria andTemplateIdLessThanOrEqualTo(Integer value) {
+            addCriterion("template_id <=", value, "templateId");
             return (Criteria) this;
         }
 
-        public Criteria andDatabaseNameLike(String value) {
-            addCriterion("database_name like", value, "databaseName");
+        public Criteria andTemplateIdIn(List<Integer> values) {
+            addCriterion("template_id in", values, "templateId");
             return (Criteria) this;
         }
 
-        public Criteria andDatabaseNameNotLike(String value) {
-            addCriterion("database_name not like", value, "databaseName");
+        public Criteria andTemplateIdNotIn(List<Integer> values) {
+            addCriterion("template_id not in", values, "templateId");
             return (Criteria) this;
         }
 
-        public Criteria andDatabaseNameIn(List<String> values) {
-            addCriterion("database_name in", values, "databaseName");
+        public Criteria andTemplateIdBetween(Integer value1, Integer value2) {
+            addCriterion("template_id between", value1, value2, "templateId");
             return (Criteria) this;
         }
 
-        public Criteria andDatabaseNameNotIn(List<String> values) {
-            addCriterion("database_name not in", values, "databaseName");
+        public Criteria andTemplateIdNotBetween(Integer value1, Integer value2) {
+            addCriterion("template_id not between", value1, value2, "templateId");
             return (Criteria) this;
         }
 
-        public Criteria andDatabaseNameBetween(String value1, String value2) {
-            addCriterion("database_name between", value1, value2, "databaseName");
+        public Criteria andTextualNameIsNull() {
+            addCriterion("textual_name is null");
             return (Criteria) this;
         }
 
-        public Criteria andDatabaseNameNotBetween(String value1, String value2) {
-            addCriterion("database_name not between", value1, value2, "databaseName");
+        public Criteria andTextualNameIsNotNull() {
+            addCriterion("textual_name is not null");
             return (Criteria) this;
         }
 
-        public Criteria andDatabaseUrlIsNull() {
-            addCriterion("database_url is null");
+        public Criteria andTextualNameEqualTo(String value) {
+            addCriterion("textual_name =", value, "textualName");
             return (Criteria) this;
         }
 
-        public Criteria andDatabaseUrlIsNotNull() {
-            addCriterion("database_url is not null");
+        public Criteria andTextualNameNotEqualTo(String value) {
+            addCriterion("textual_name <>", value, "textualName");
             return (Criteria) this;
         }
 
-        public Criteria andDatabaseUrlEqualTo(String value) {
-            addCriterion("database_url =", value, "databaseUrl");
+        public Criteria andTextualNameGreaterThan(String value) {
+            addCriterion("textual_name >", value, "textualName");
             return (Criteria) this;
         }
 
-        public Criteria andDatabaseUrlNotEqualTo(String value) {
-            addCriterion("database_url <>", value, "databaseUrl");
+        public Criteria andTextualNameGreaterThanOrEqualTo(String value) {
+            addCriterion("textual_name >=", value, "textualName");
             return (Criteria) this;
         }
 
-        public Criteria andDatabaseUrlGreaterThan(String value) {
-            addCriterion("database_url >", value, "databaseUrl");
+        public Criteria andTextualNameLessThan(String value) {
+            addCriterion("textual_name <", value, "textualName");
             return (Criteria) this;
         }
 
-        public Criteria andDatabaseUrlGreaterThanOrEqualTo(String value) {
-            addCriterion("database_url >=", value, "databaseUrl");
+        public Criteria andTextualNameLessThanOrEqualTo(String value) {
+            addCriterion("textual_name <=", value, "textualName");
             return (Criteria) this;
         }
 
-        public Criteria andDatabaseUrlLessThan(String value) {
-            addCriterion("database_url <", value, "databaseUrl");
+        public Criteria andTextualNameLike(String value) {
+            addCriterion("textual_name like", value, "textualName");
             return (Criteria) this;
         }
 
-        public Criteria andDatabaseUrlLessThanOrEqualTo(String value) {
-            addCriterion("database_url <=", value, "databaseUrl");
+        public Criteria andTextualNameNotLike(String value) {
+            addCriterion("textual_name not like", value, "textualName");
             return (Criteria) this;
         }
 
-        public Criteria andDatabaseUrlLike(String value) {
-            addCriterion("database_url like", value, "databaseUrl");
+        public Criteria andTextualNameIn(List<String> values) {
+            addCriterion("textual_name in", values, "textualName");
             return (Criteria) this;
         }
 
-        public Criteria andDatabaseUrlNotLike(String value) {
-            addCriterion("database_url not like", value, "databaseUrl");
+        public Criteria andTextualNameNotIn(List<String> values) {
+            addCriterion("textual_name not in", values, "textualName");
             return (Criteria) this;
         }
 
-        public Criteria andDatabaseUrlIn(List<String> values) {
-            addCriterion("database_url in", values, "databaseUrl");
+        public Criteria andTextualNameBetween(String value1, String value2) {
+            addCriterion("textual_name between", value1, value2, "textualName");
             return (Criteria) this;
         }
 
-        public Criteria andDatabaseUrlNotIn(List<String> values) {
-            addCriterion("database_url not in", values, "databaseUrl");
+        public Criteria andTextualNameNotBetween(String value1, String value2) {
+            addCriterion("textual_name not between", value1, value2, "textualName");
             return (Criteria) this;
         }
 
-        public Criteria andDatabaseUrlBetween(String value1, String value2) {
-            addCriterion("database_url between", value1, value2, "databaseUrl");
+        public Criteria andTextualUrlIsNull() {
+            addCriterion("textual_url is null");
             return (Criteria) this;
         }
 
-        public Criteria andDatabaseUrlNotBetween(String value1, String value2) {
-            addCriterion("database_url not between", value1, value2, "databaseUrl");
+        public Criteria andTextualUrlIsNotNull() {
+            addCriterion("textual_url is not null");
             return (Criteria) this;
         }
 
-        public Criteria andUsernameIsNull() {
-            addCriterion("username is null");
+        public Criteria andTextualUrlEqualTo(String value) {
+            addCriterion("textual_url =", value, "textualUrl");
             return (Criteria) this;
         }
 
-        public Criteria andUsernameIsNotNull() {
-            addCriterion("username is not null");
+        public Criteria andTextualUrlNotEqualTo(String value) {
+            addCriterion("textual_url <>", value, "textualUrl");
             return (Criteria) this;
         }
 
-        public Criteria andUsernameEqualTo(String value) {
-            addCriterion("username =", value, "username");
+        public Criteria andTextualUrlGreaterThan(String value) {
+            addCriterion("textual_url >", value, "textualUrl");
             return (Criteria) this;
         }
 
-        public Criteria andUsernameNotEqualTo(String value) {
-            addCriterion("username <>", value, "username");
+        public Criteria andTextualUrlGreaterThanOrEqualTo(String value) {
+            addCriterion("textual_url >=", value, "textualUrl");
             return (Criteria) this;
         }
 
-        public Criteria andUsernameGreaterThan(String value) {
-            addCriterion("username >", value, "username");
+        public Criteria andTextualUrlLessThan(String value) {
+            addCriterion("textual_url <", value, "textualUrl");
             return (Criteria) this;
         }
 
-        public Criteria andUsernameGreaterThanOrEqualTo(String value) {
-            addCriterion("username >=", value, "username");
+        public Criteria andTextualUrlLessThanOrEqualTo(String value) {
+            addCriterion("textual_url <=", value, "textualUrl");
             return (Criteria) this;
         }
 
-        public Criteria andUsernameLessThan(String value) {
-            addCriterion("username <", value, "username");
+        public Criteria andTextualUrlLike(String value) {
+            addCriterion("textual_url like", value, "textualUrl");
             return (Criteria) this;
         }
 
-        public Criteria andUsernameLessThanOrEqualTo(String value) {
-            addCriterion("username <=", value, "username");
+        public Criteria andTextualUrlNotLike(String value) {
+            addCriterion("textual_url not like", value, "textualUrl");
             return (Criteria) this;
         }
 
-        public Criteria andUsernameLike(String value) {
-            addCriterion("username like", value, "username");
+        public Criteria andTextualUrlIn(List<String> values) {
+            addCriterion("textual_url in", values, "textualUrl");
             return (Criteria) this;
         }
 
-        public Criteria andUsernameNotLike(String value) {
-            addCriterion("username not like", value, "username");
+        public Criteria andTextualUrlNotIn(List<String> values) {
+            addCriterion("textual_url not in", values, "textualUrl");
             return (Criteria) this;
         }
 
-        public Criteria andUsernameIn(List<String> values) {
-            addCriterion("username in", values, "username");
+        public Criteria andTextualUrlBetween(String value1, String value2) {
+            addCriterion("textual_url between", value1, value2, "textualUrl");
             return (Criteria) this;
         }
 
-        public Criteria andUsernameNotIn(List<String> values) {
-            addCriterion("username not in", values, "username");
-            return (Criteria) this;
-        }
-
-        public Criteria andUsernameBetween(String value1, String value2) {
-            addCriterion("username between", value1, value2, "username");
-            return (Criteria) this;
-        }
-
-        public Criteria andUsernameNotBetween(String value1, String value2) {
-            addCriterion("username not between", value1, value2, "username");
-            return (Criteria) this;
-        }
-
-        public Criteria andPasswordIsNull() {
-            addCriterion("password is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andPasswordIsNotNull() {
-            addCriterion("password is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andPasswordEqualTo(String value) {
-            addCriterion("password =", value, "password");
-            return (Criteria) this;
-        }
-
-        public Criteria andPasswordNotEqualTo(String value) {
-            addCriterion("password <>", value, "password");
-            return (Criteria) this;
-        }
-
-        public Criteria andPasswordGreaterThan(String value) {
-            addCriterion("password >", value, "password");
-            return (Criteria) this;
-        }
-
-        public Criteria andPasswordGreaterThanOrEqualTo(String value) {
-            addCriterion("password >=", value, "password");
-            return (Criteria) this;
-        }
-
-        public Criteria andPasswordLessThan(String value) {
-            addCriterion("password <", value, "password");
-            return (Criteria) this;
-        }
-
-        public Criteria andPasswordLessThanOrEqualTo(String value) {
-            addCriterion("password <=", value, "password");
-            return (Criteria) this;
-        }
-
-        public Criteria andPasswordLike(String value) {
-            addCriterion("password like", value, "password");
-            return (Criteria) this;
-        }
-
-        public Criteria andPasswordNotLike(String value) {
-            addCriterion("password not like", value, "password");
-            return (Criteria) this;
-        }
-
-        public Criteria andPasswordIn(List<String> values) {
-            addCriterion("password in", values, "password");
-            return (Criteria) this;
-        }
-
-        public Criteria andPasswordNotIn(List<String> values) {
-            addCriterion("password not in", values, "password");
-            return (Criteria) this;
-        }
-
-        public Criteria andPasswordBetween(String value1, String value2) {
-            addCriterion("password between", value1, value2, "password");
-            return (Criteria) this;
-        }
-
-        public Criteria andPasswordNotBetween(String value1, String value2) {
-            addCriterion("password not between", value1, value2, "password");
+        public Criteria andTextualUrlNotBetween(String value1, String value2) {
+            addCriterion("textual_url not between", value1, value2, "textualUrl");
             return (Criteria) this;
         }
 

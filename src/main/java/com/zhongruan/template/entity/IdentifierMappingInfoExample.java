@@ -1,4 +1,4 @@
-package com.zhongruan.template.example;
+package com.zhongruan.template.entity;
 
 import java.util.ArrayList;
 import java.util.Date;

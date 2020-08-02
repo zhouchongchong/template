@@ -1,13 +1,12 @@
-package com.zhongruan.template.mapper;
+package com.zhongruan.template.dao;
 
-import com.zhongruan.template.example.IdentifierMappingInfoExample;
 import com.zhongruan.template.entity.IdentifierMappingInfo;
-
+import com.zhongruan.template.entity.IdentifierMappingInfoExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 public interface IdentifierMappingInfoMapper {
-    int countByExample(IdentifierMappingInfoExample example);
+    long countByExample(IdentifierMappingInfoExample example);
 
     int deleteByExample(IdentifierMappingInfoExample example);
 

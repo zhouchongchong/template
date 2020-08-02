@@ -1,15 +1,12 @@
-package com.zhongruan.template.mapper;
+package com.zhongruan.template.dao;
 
-import com.zhongruan.template.example.TemplateInfoExample;
 import com.zhongruan.template.entity.TemplateInfo;
-
+import com.zhongruan.template.entity.TemplateInfoExample;
 import java.util.List;
-
-import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-   @Mapper
+
 public interface TemplateInfoMapper {
-    int countByExample(TemplateInfoExample example);
+    long countByExample(TemplateInfoExample example);
 
     int deleteByExample(TemplateInfoExample example);
 
@@ -18,8 +15,6 @@ public interface TemplateInfoMapper {
     int insertSelective(TemplateInfo record);
 
     List<TemplateInfo> selectByExample(TemplateInfoExample example);
-
-       List<TemplateInfo> findAll();
 
     int updateByExampleSelective(@Param("record") TemplateInfo record, @Param("example") TemplateInfoExample example);
 

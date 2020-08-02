@@ -1,14 +1,12 @@
-package com.zhongruan.template.mapper;
+package com.zhongruan.template.dao;
 
-import com.zhongruan.template.entity.TemplateInfo;
-import com.zhongruan.template.example.TextualInfoExample;
 import com.zhongruan.template.entity.TextualInfo;
-
+import com.zhongruan.template.entity.TextualInfoExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 public interface TextualInfoMapper {
-    int countByExample(TextualInfoExample example);
+    long countByExample(TextualInfoExample example);
 
     int deleteByExample(TextualInfoExample example);
 
@@ -21,5 +19,4 @@ public interface TextualInfoMapper {
     int updateByExampleSelective(@Param("record") TextualInfo record, @Param("example") TextualInfoExample example);
 
     int updateByExample(@Param("record") TextualInfo record, @Param("example") TextualInfoExample example);
-
 }

@@ -1,13 +1,12 @@
-package com.zhongruan.template.mapper;
+package com.zhongruan.template.dao;
 
-import com.zhongruan.template.example.DatabaseInfoExample;
 import com.zhongruan.template.entity.DatabaseInfo;
-
+import com.zhongruan.template.entity.DatabaseInfoExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 public interface DatabaseInfoMapper {
-    int countByExample(DatabaseInfoExample example);
+    long countByExample(DatabaseInfoExample example);
 
     int deleteByExample(DatabaseInfoExample example);
 
