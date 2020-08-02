@@ -4,10 +4,10 @@ server:
     context-path: /template
 spring:
   datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
+    driver-class-name: com.mysql.jdbc.Driver
     username: root
     password: password
-    url: jdbc:mysql://192.168.43.207:3306/springboot?useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=UTC
+    url: jdbc:mysql://192.168.43.207:3306/zhuangruan?useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=UTC
 
 
 mybatis:
