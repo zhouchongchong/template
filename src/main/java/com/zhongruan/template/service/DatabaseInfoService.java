@@ -1,31 +1,19 @@
-/**
- * @Copyright Beijing Jiangrongxin Technology Co,.Ltd 2020.
- * <p>
- * This material is the property of Beijing Jiangrongxin Technology Co,. Ltd.
- * and the information contained herein is confidential. This material,
- * either in whole or in part, must not be reproduced or disclosed to others
- * or used for purposes other than that for which it has been supplied without
- * Beijing Jiangrongxin's prior written permission,
- * or, if any part hereof is furnished by virtue of contract with a third party,
- * as expressly authorized under that contract.
- * <p>
- * *****************************************************************************
- * Date             Author      Version       Description
- * 2020/8/2         ${Author}  1.0.0         ${DESCRIPTION}
- * *****************************************************************************
- */
+
 package com.zhongruan.template.service;
 
 import com.zhongruan.template.dao.DatabaseInfoMapper;
 import com.zhongruan.template.entity.DatabaseInfo;
 import com.zhongruan.template.entity.DatabaseInfoExample;
+import com.zhongruan.template.vo.FieldBean;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author zhenxu.guan
@@ -41,7 +29,7 @@ public class DatabaseInfoService {
         DatabaseInfoExample databaseInfoExample = new DatabaseInfoExample();
 
         DatabaseInfoExample.Criteria criteria = databaseInfoExample.createCriteria();
-        databaseInfoExample.createCriteria().andDatabaseNameEqualTo(databaseName);
+        criteria.andDatabaseNameEqualTo(databaseName);
         List<DatabaseInfo> databaseInfos = null;
         try {
             databaseInfos = databaseInfoMapper.selectByExample(databaseInfoExample);
@@ -53,7 +41,7 @@ public class DatabaseInfoService {
     }
 
 
-    public List<String> listAlltable(DatabaseInfo databaseInfo) throws Exception {
+    public Map listAlltable(DatabaseInfo databaseInfo) throws Exception {
         String url = databaseInfo.getDatabaseUrl();
         String user = databaseInfo.getUsername();
         String pwd = databaseInfo.getPassword();
@@ -79,7 +67,7 @@ public class DatabaseInfoService {
             throw new Exception("请添加数据库");
         }
 
-        List list1 = new ArrayList<String>();
+        Map<String,List<FieldBean>> map=new HashMap<>();
         try {
             Class.forName(driverClass);
             con = DriverManager.getConnection(url, user, pwd);
@@ -88,15 +76,32 @@ public class DatabaseInfoService {
             }
             dbMetaData = con.getMetaData();
             String[] types = {"TABLE"};
-
+            //获取一个库下所有的表名对象
             ResultSet rs = dbMetaData.getTables(catalog, schemaName, "%", types);
+            String tableName =null;
+            //遍历resultSet对象
             while (rs.next()) {
-                String tableName = rs.getString("TABLE_NAME"); // 表名
-                String tableType = rs.getString("TABLE_TYPE"); // 表类型
-                String remarks = rs.getString("REMARKS"); // 表备注
-                list1.add(tableName);
+                List<FieldBean> list=new ArrayList<>();
+                //分别获取表名
+                tableName=rs.getString("TABLE_NAME");
+                //获取指定表的ResultSet对象
+                ResultSet resultSet = dbMetaData.getColumns(catalog, null, tableName, null);
 
+                while (resultSet.next()) {
+                    FieldBean fieldBean=new FieldBean();
+                    //获取字段名称
+                    String name = resultSet.getString("COLUMN_NAME");
+                    String columnType = resultSet.getString("TYPE_NAME");
+
+                    fieldBean.setFieldName(name);
+                    fieldBean.setFieldType(columnType);
+                    fieldBean.setFieldDes(resultSet.getString("REMARKS"));
+                    list.add(fieldBean);
+                }
+                map.put(tableName,list);
             }
+
+
         } catch (SQLException e) {
             throw new Exception(e.getMessage());
         } finally {
@@ -109,7 +114,7 @@ public class DatabaseInfoService {
                 }
             }
         }
-        return list1;
+        return map;
     }
 }
 
