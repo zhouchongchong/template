@@ -5,6 +5,8 @@ import java.util.Date;
 public class IdentifierMappingInfo {
     private Integer id;
 
+    private Integer templateId;
+
     private String identifierName;
 
     private String sqlContext;
@@ -19,6 +21,14 @@ public class IdentifierMappingInfo {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public Integer getTemplateId() {
+        return templateId;
+    }
+
+    public void setTemplateId(Integer templateId) {
+        this.templateId = templateId;
     }
 
     public String getIdentifierName() {

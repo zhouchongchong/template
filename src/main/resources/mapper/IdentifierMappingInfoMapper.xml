@@ -3,6 +3,7 @@
 <mapper namespace="com.zhongruan.template.dao.IdentifierMappingInfoMapper">
   <resultMap id="BaseResultMap" type="com.zhongruan.template.entity.IdentifierMappingInfo">
     <result column="id" jdbcType="INTEGER" property="id" />
+    <result column="template_id" jdbcType="INTEGER" property="templateId" />
     <result column="Identifier_name" jdbcType="VARCHAR" property="identifierName" />
     <result column="sql_context" jdbcType="VARCHAR" property="sqlContext" />
     <result column="created_time" jdbcType="TIMESTAMP" property="createdTime" />
@@ -67,7 +68,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, Identifier_name, sql_context, created_time, updated_time
+    id, template_id, Identifier_name, sql_context, created_time, updated_time
   </sql>
   <select id="selectByExample" parameterType="com.zhongruan.template.entity.IdentifierMappingInfoExample" resultMap="BaseResultMap">
     select
@@ -90,16 +91,21 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.zhongruan.template.entity.IdentifierMappingInfo">
-    insert into identifier_mapping_info (id, Identifier_name, sql_context, 
-      created_time, updated_time)
-    values (#{id,jdbcType=INTEGER}, #{identifierName,jdbcType=VARCHAR}, #{sqlContext,jdbcType=VARCHAR}, 
-      #{createdTime,jdbcType=TIMESTAMP}, #{updatedTime,jdbcType=TIMESTAMP})
+    insert into identifier_mapping_info (id, template_id, Identifier_name, 
+      sql_context, created_time, updated_time
+      )
+    values (#{id,jdbcType=INTEGER}, #{templateId,jdbcType=INTEGER}, #{identifierName,jdbcType=VARCHAR}, 
+      #{sqlContext,jdbcType=VARCHAR}, #{createdTime,jdbcType=TIMESTAMP}, #{updatedTime,jdbcType=TIMESTAMP}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.zhongruan.template.entity.IdentifierMappingInfo">
     insert into identifier_mapping_info
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
         id,
+      </if>
+      <if test="templateId != null">
+        template_id,
       </if>
       <if test="identifierName != null">
         Identifier_name,
@@ -117,6 +123,9 @@
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
         #{id,jdbcType=INTEGER},
+      </if>
+      <if test="templateId != null">
+        #{templateId,jdbcType=INTEGER},
       </if>
       <if test="identifierName != null">
         #{identifierName,jdbcType=VARCHAR},
@@ -144,6 +153,9 @@
       <if test="record.id != null">
         id = #{record.id,jdbcType=INTEGER},
       </if>
+      <if test="record.templateId != null">
+        template_id = #{record.templateId,jdbcType=INTEGER},
+      </if>
       <if test="record.identifierName != null">
         Identifier_name = #{record.identifierName,jdbcType=VARCHAR},
       </if>
@@ -164,6 +176,7 @@
   <update id="updateByExample" parameterType="map">
     update identifier_mapping_info
     set id = #{record.id,jdbcType=INTEGER},
+      template_id = #{record.templateId,jdbcType=INTEGER},
       Identifier_name = #{record.identifierName,jdbcType=VARCHAR},
       sql_context = #{record.sqlContext,jdbcType=VARCHAR},
       created_time = #{record.createdTime,jdbcType=TIMESTAMP},
