@@ -46,9 +46,9 @@ public class TemplateInfoController {
 
     //通过名称获取模板信息
     @GetMapping("/findByName")
+    @ResponseBody
     public ResultData findByName(@RequestParam(value = "templateName") String templateName) {
         List<TemplateInfo> templateInfos = templateInfoService.findByName(templateName);
         return ResultData.success(templateInfos);
-
     }
 }
