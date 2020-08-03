@@ -90,7 +90,7 @@
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.zhongruan.template.entity.IdentifierMappingInfo">
+  <insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="com.zhongruan.template.entity.IdentifierMappingInfo">
     insert into identifier_mapping_info (id, template_id, Identifier_name, 
       sql_context, created_time, updated_time
       )
@@ -98,7 +98,7 @@
       #{sqlContext,jdbcType=VARCHAR}, #{createdTime,jdbcType=TIMESTAMP}, #{updatedTime,jdbcType=TIMESTAMP}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.zhongruan.template.entity.IdentifierMappingInfo">
+  <insert id="insertSelective" useGeneratedKeys="true" keyProperty="id" parameterType="com.zhongruan.template.entity.IdentifierMappingInfo">
     insert into identifier_mapping_info
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">

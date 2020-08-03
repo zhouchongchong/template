@@ -19,19 +19,19 @@ import java.util.List;
 @RestController
 @RequestMapping("/sqlExecute")
 public class SqlExecuteController {
-    @Autowired
-    private SqlExecuteService sqlExecuteService;
-@GetMapping("/sqlQuery")
-    public ResultData sqlQuery(@RequestParam("sql") String sql){
-        List list =new ArrayList();
-     try{
-          list = sqlExecuteService.sqlExecute(sql);
+	@Autowired
+	private SqlExecuteService sqlExecuteService;
 
-     }catch(Exception e){
-
-     }
-        return ResultData.success(list);
- }
+	@GetMapping("/sqlQuery")
+	public ResultData sqlQuery(@RequestParam("sql") String sql) {
+		Object ret;
+		try {
+			ret = sqlExecuteService.sqlExecute(sql);
+		} catch (Exception e) {
+			ret = e.getMessage();
+		}
+		return ResultData.success(ret);
+	}
 
 
 }

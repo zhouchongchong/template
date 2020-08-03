@@ -32,12 +32,11 @@ public class FileOperateController {
 		return fileService.dealXMLFile(file, templateId);
 	}
 
-	@RequestMapping(value = "/create_word")
+	@RequestMapping(value = "/create_word",method = RequestMethod.POST)
 	@ApiOperation(value = "根据模板 ID 创建 word 模板")
 	@ResponseBody
 	public ResultData createWordFile(@RequestParam int templateId){
 
-		return null;
+		return fileService.createWord(templateId);
 	}
-
 }

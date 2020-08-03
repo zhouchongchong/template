@@ -8,6 +8,7 @@ package com.zhongruan.template.vo;
 public class Constant {
 	public static final String SUFF_HTML = ".html";
 	public static final String SUFF_FTL = ".ftl";
+	public static final String SUFF_DOC = ".doc";
 	public static final String DOT = ".";
 	public static final String ASTERISK = "~";
 
