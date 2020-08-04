@@ -2,15 +2,15 @@ package com.zhongruan.template.service;
 
 import com.zhongruan.template.dao.IdentifierMappingInfoMapper;
 import com.zhongruan.template.dao.TemplateInfoMapper;
-import com.zhongruan.template.entity.IdentifierMappingInfo;
-import com.zhongruan.template.entity.IdentifierMappingInfoExample;
-import com.zhongruan.template.entity.TemplateInfo;
-import com.zhongruan.template.entity.TemplateInfoExample;
+import com.zhongruan.template.dao.TextualInfoMapper;
+import com.zhongruan.template.entity.*;
 import com.zhongruan.template.massage.ResultData;
 import com.zhongruan.template.util.FileUtil;
 import com.zhongruan.template.vo.Constant;
+import freemarker.template.Configuration;
 import freemarker.template.TemplateException;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.tomcat.util.bcel.Const;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.annotation.Transient;
@@ -36,6 +36,9 @@ public class FileService {
 	@Value("${file.path.html}")
 	private String html_file_path;
 
+	@Value("${file.path.htm}")
+	private String htm_file_path;
+
 	@Value("${file.path.word}")
 	private String word_file_path;
 
@@ -57,6 +60,9 @@ public class FileService {
 
 	@Autowired
 	private SqlExecuteService sqlExecuteService;
+
+	@Autowired
+	private TextualInfoMapper textualInfoMapper;
 
 	@Transient
 	public ResultData dealXMLFile(MultipartFile file, int templateId) {
@@ -115,23 +121,38 @@ public class FileService {
 			final String zipFilePath = FileUtil.saveFile(file, zip_file_path);
 			log.info("zip file path:{},file size:{}", zipFilePath, file.getSize());
 
-			final String htmlFilePath = FileUtil.unZipFiles(zipFilePath, html_file_path);
-			if (StringUtils.isEmpty(htmlFilePath)) {
-				log.error("该zip文件不含有 HTML 文件");
-				return ResultData.error("该zip文件不含有 HTML 文件");
+			final Map<String, String> unZipMap = FileUtil.unZipFiles(zipFilePath, htm_file_path);
+			if (StringUtils.isEmpty(unZipMap.get(Constant.MAP_KEY_XML))|| StringUtils.isEmpty(unZipMap.get(Constant.MAP_KEY_HTML))) {
+				log.error("该zip文件不含有 缺乏必要 文件");
+				return ResultData.error("该zip文件不含有 缺乏必要 文件");
 			}
 
-			String showHTMLFile = html_file_path + System.currentTimeMillis() + Constant.SUFF_HTML;
-			final int replaceNum = FileUtil.replaceTxtByStr(htmlFilePath, showHTMLFile, Constant.ASTERISK,
+			String showHTMLFile = htm_file_path + System.currentTimeMillis() + Constant.SUFF_HTML;
+			final int replaceNum = FileUtil.replaceTxtByStr(unZipMap.get(Constant.MAP_KEY_HTML), showHTMLFile, Constant.ASTERISK,
 					Constant.HTML_REPLACE, true, Constant.APPEND_STR);
+
+			String ftlFilePath = ftl_file_path + System.currentTimeMillis() + Constant.SUFF_FTL;
+			final int replaceRet = FileUtil.replaceTxtByStr(unZipMap.get(Constant.MAP_KEY_XML), ftlFilePath, Constant.ASTERISK,
+					Constant.FTL_REPLACE, false, null);
+			if (replaceNum != replaceRet){
+				return ResultData.error("XML 与 HTML 不匹配");
+			}
+			if (replaceRet == 0) {
+				return ResultData.error("XML 模板替换失败");
+			}
+
 			if (replaceNum == 0) {
 				return ResultData.error("模板綁定 SQL 页面生成失败");
 			}
+
+
+
 			log.info("after deal html file:{},需要绑定的 SQL 数量：{}", showHTMLFile, replaceNum);
 
 			final TemplateInfo templateInfo = new TemplateInfo();
 			templateInfo.setTemplateName(templateName);
 			templateInfo.setTemplateHtmlUrl(showHTMLFile);
+			templateInfo.setTemplateFtlUrl(ftlFilePath);
 
 			final int effortRow = templateInfoMapper.insertSelective(templateInfo);
 
@@ -160,7 +181,7 @@ public class FileService {
 	}
 
 
-	public ResultData createWord(int templateId) {
+	public ResultData createWord(int templateId,int dbSourceId) {
 		log.info("create word template");
 		final IdentifierMappingInfoExample infoExample = new IdentifierMappingInfoExample();
 		infoExample.createCriteria().andTemplateIdEqualTo(templateId);
@@ -171,7 +192,7 @@ public class FileService {
 			if (StringUtils.isEmpty(identifier.getSqlContext()))
 				continue;
 			try {
-				final List<Map<String, Object>> list = sqlExecuteService.sqlExecute(identifier.getSqlContext());
+				final List<Map<String, Object>> list = sqlExecuteService.sqlExecute(identifier.getSqlContext(),dbSourceId);
 				if (list == null)
 					return ResultData.error("sql 执行出错");
 				final Map<String, Object> map1 = list.get(0);
@@ -201,7 +222,11 @@ public class FileService {
 			log.error("create word error:{}",e.getMessage());
 			return ResultData.error(e.getMessage());
 		}
-
+		final TextualInfo textualInfo = new TextualInfo();
+		textualInfo.setTemplateId(templateId);
+		textualInfo.setTextualName(templateInfos.get(0).getTemplateName() + Constant.SUFF_DOC);
+		textualInfo.setTextualUrl(wordPath);
+		textualInfoMapper.insertSelective(textualInfo);
 		log.info("create word success,ftlPath:{}, docPath:{}",templateInfos.get(0).getTemplateFtlUrl(),wordPath);
 
 		return ResultData.success(wordPath);

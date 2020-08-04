@@ -1,10 +1,14 @@
 
 package com.zhongruan.template.service;
 
+import com.alibaba.fastjson.JSONObject;
 import com.zhongruan.template.dao.DatabaseInfoMapper;
 import com.zhongruan.template.entity.DatabaseInfo;
 import com.zhongruan.template.entity.DatabaseInfoExample;
+import com.zhongruan.template.massage.ResultData;
+import com.zhongruan.template.vo.Constant;
 import com.zhongruan.template.vo.FieldBean;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,16 +24,19 @@ import java.util.Map;
  * @Date 2020/8/2 22:22
  */
 @Service
+@Slf4j
 public class DatabaseInfoService {
     @Autowired
     private DatabaseInfoMapper databaseInfoMapper;
 
     //用于获取数据源对象
-    public DatabaseInfo findByName(String databaseName) {
+    public DatabaseInfo findById(int dbSourceId) {
         DatabaseInfoExample databaseInfoExample = new DatabaseInfoExample();
 
         DatabaseInfoExample.Criteria criteria = databaseInfoExample.createCriteria();
-        criteria.andDatabaseNameEqualTo(databaseName);
+        if (dbSourceId != 0){
+            criteria.andIdEqualTo(dbSourceId);
+        }
         List<DatabaseInfo> databaseInfos = null;
         try {
             databaseInfos = databaseInfoMapper.selectByExample(databaseInfoExample);
@@ -40,6 +47,80 @@ public class DatabaseInfoService {
 
     }
 
+    public ResultData addDBSource(DatabaseInfo databaseInfo){
+        String message = Constant.ERROR;
+        try {
+            final int selective = databaseInfoMapper.insertSelective(databaseInfo);
+            if (selective == 1){
+                message = Constant.SUCCESS;
+            }
+        }catch (Exception e){
+            log.error("inset DBSource err:{}",e.getMessage());
+            message = e.getMessage();
+        }
+
+        return ResultData.success(message);
+    }
+
+    public ResultData update(DatabaseInfo jsonObject){
+        String message = Constant.ERROR;
+        try {
+            final DatabaseInfoExample databaseInfoExample = new DatabaseInfoExample();
+            databaseInfoExample.createCriteria().andIdEqualTo(jsonObject.getId());
+            final int selective = databaseInfoMapper.updateByExampleSelective(jsonObject,databaseInfoExample);
+            if (selective == 1){
+                message = Constant.SUCCESS;
+            }
+        }catch (Exception e){
+            log.error("inset DBSource err:{}",e.getMessage());
+            message = e.getMessage();
+        }
+
+        return ResultData.success(message);
+    }
+
+    public ResultData testConnect(DatabaseInfo databaseInfo){
+        String message = Constant.ERROR;
+        String url = databaseInfo.getDatabaseUrl();
+        String user = databaseInfo.getUsername();
+        String pwd = databaseInfo.getPassword();
+        String bdtype = databaseInfo.getDatabaseType();
+        String driverClass = "";
+        if ("mysql".equals(bdtype)) {
+            driverClass = "com.mysql.jdbc.Driver";
+        }
+        if ("oracle".equals(bdtype)) {
+            driverClass = "oracle.jdbc.driver.OracleDriver";
+        }
+        // 获取连接地址
+        String[] urls = StringUtils.split(StringUtils.split(url, "?")[0], "/");
+        Connection con = null;
+
+
+        Map<String,List<FieldBean>> map=new HashMap<>();
+        try {
+            Class.forName(driverClass);
+            con = DriverManager.getConnection(url, user, pwd);
+            if (con.isClosed()) {
+                con = DriverManager.getConnection(url, user, pwd);
+            }
+            if (con != null) {
+                message = Constant.SUCCESS;
+            }
+        } catch (SQLException |ClassNotFoundException e) {
+            message = e.getMessage();
+        }  finally {
+            if (con != null) {
+                try {
+                    con.close();
+
+                } catch (SQLException throwables) {
+                    throwables.printStackTrace();
+                }
+            }
+        }
+        return ResultData.success(message);
+    }
 
     public Map listAlltable(DatabaseInfo databaseInfo) throws Exception {
         String url = databaseInfo.getDatabaseUrl();

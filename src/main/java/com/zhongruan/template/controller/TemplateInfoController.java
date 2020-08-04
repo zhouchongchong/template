@@ -20,8 +20,12 @@ import com.zhongruan.template.entity.TemplateInfo;
 import com.zhongruan.template.massage.ResultData;
 import com.zhongruan.template.service.TemplateInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.File;
 import java.util.List;
 
 /**
@@ -39,9 +43,7 @@ public class TemplateInfoController {
     @GetMapping("/findAll")
     public ResultData findAll() {
         List<TemplateInfo> all = templateInfoService.getAll();
-
-
-        return ResultData.success(templateInfoService.getAll());
+        return ResultData.success(all);
     }
 
     //通过名称获取模板信息
@@ -50,5 +52,10 @@ public class TemplateInfoController {
     public ResultData findByName(@RequestParam(value = "templateName") String templateName) {
         List<TemplateInfo> templateInfos = templateInfoService.findByName(templateName);
         return ResultData.success(templateInfos);
+    }
+    @PostMapping("/delete")
+    @ResponseBody
+    public ResultData deleteTemplateById(@RequestParam int templateId){
+        return templateInfoService.deleteById(templateId);
     }
 }

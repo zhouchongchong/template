@@ -7,9 +7,9 @@ server:
 spring:
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
-    username: root
-    password: password
-    url: jdbc:mysql://192.168.43.207:3306/zhuangruan?useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=UTC
+    username: username
+    password: zhongruan123
+    url: jdbc:mysql://127.0.0.1:3306/zhongruan?useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=UTC
   http:
     encoding:
       force: true
@@ -26,8 +26,9 @@ mybatis:
 
 file:
   path:
-    html: d:/file/html/
-    word: d:/file/word/
-    xml: d:/file/xml/
-    ftl: d:/file/ftl/
-    zip: d:/file/zip/
+    htm: e:/file/htm/
+    html: e:/file/html/
+    word: e:/file/word/
+    xml: e:/file/xml/
+    ftl: e:/file/ftl/
+    zip: e:/file/zip/

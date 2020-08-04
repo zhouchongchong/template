@@ -14,6 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.*;
 import java.nio.charset.Charset;
 import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 import java.util.zip.ZipEntry;
@@ -93,7 +94,7 @@ public class FileUtil {
 	/**
 	 * 解压到指定目录
 	 */
-	public static String unZipFiles(String zipPath, String descDir) throws IOException {
+	public static Map<String,String> unZipFiles(String zipPath, String descDir) throws IOException {
 		return unZipFiles(new File(zipPath), descDir);
 	}
 
@@ -101,9 +102,11 @@ public class FileUtil {
 	 * 解压文件到指定目录
 	 */
 	@SuppressWarnings("rawtypes")
-	public static String unZipFiles(File zipFile, String descDir) throws IOException {
+	public static Map<String,String> unZipFiles(File zipFile, String descDir) throws IOException {
 		File pathFile = new File(descDir);
+		final HashMap<String, String> retMap = new HashMap<>();
 		String htmlFilePath = null;
+		String xmlFilePath = null;
 		log.info("***********开始解压文件：{}*********", zipFile.getName());
 		if (!pathFile.exists()) {
 			pathFile.mkdirs();
@@ -115,7 +118,7 @@ public class FileUtil {
 			String zipEntryName = entry.getName();
 			InputStream in = zip.getInputStream(entry);
 			String outPath = (descDir + zipEntryName).replaceAll("\\*", "/");
-			;
+
 			//判断路径是否存在,不存在则创建文件路径
 			File file = new File(outPath.substring(0, outPath.lastIndexOf('/')));
 			if (!file.exists()) {
@@ -131,6 +134,11 @@ public class FileUtil {
 			if ((indexOf = outPath.indexOf(Constant.DOT)) != -1 && (outPath.substring(indexOf + 1).equals("html")
 					|| outPath.substring(indexOf + 1).equals("htm"))) {
 				htmlFilePath = outPath;
+			} else if (outPath.substring(indexOf + 1).equals("xml")){
+				final File xmlFile = new File(outPath);
+				if (!xmlFile.getName().equals("colorschememapping.xml") && !xmlFile.getName().equals("filelist.xml")){
+					xmlFilePath = outPath;
+				}
 			}
 
 			OutputStream out = new FileOutputStream(outPath);
@@ -143,7 +151,10 @@ public class FileUtil {
 			out.close();
 		}
 		log.info("******************文件：{}，解压到：{}完毕********************", zipFile.getName(), descDir);
-		return htmlFilePath;
+		retMap.put(Constant.MAP_KEY_HTML,htmlFilePath);
+		retMap.put(Constant.MAP_KEY_XML,xmlFilePath);
+		log.info("**** html file :{},xml file :{}",htmlFilePath,xmlFilePath);
+		return retMap;
 	}
 
 	/**

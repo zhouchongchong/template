@@ -23,10 +23,10 @@ public class SqlExecuteController {
 	private SqlExecuteService sqlExecuteService;
 
 	@GetMapping("/sqlQuery")
-	public ResultData sqlQuery(@RequestParam("sql") String sql) {
+	public ResultData sqlQuery(@RequestParam("sql") String sql,@RequestParam int dbSourceId) {
 		Object ret;
 		try {
-			ret = sqlExecuteService.sqlExecute(sql);
+			ret = sqlExecuteService.sqlExecute(sql,dbSourceId);
 		} catch (Exception e) {
 			ret = e.getMessage();
 		}

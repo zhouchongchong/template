@@ -34,7 +34,8 @@ public class IdentifierMappingInfoService {
     public int updateSql(IdentifierMappingInfo identifierMappingInfo) {
         IdentifierMappingInfoExample identifierMappingInfoExample=new IdentifierMappingInfoExample();
         IdentifierMappingInfoExample.Criteria criteria = identifierMappingInfoExample.createCriteria();
-        criteria.andIdEqualTo(identifierMappingInfo.getId());
+        criteria.andTemplateIdEqualTo(identifierMappingInfo.getTemplateId());
+        criteria.andIdentifierNameEqualTo(identifierMappingInfo.getIdentifierName());
         int i = identifierMappingInfoMapper.updateByExampleSelective(identifierMappingInfo, identifierMappingInfoExample);
         return i;
     }

@@ -35,8 +35,8 @@ public class FileOperateController {
 	@RequestMapping(value = "/create_word",method = RequestMethod.POST)
 	@ApiOperation(value = "根据模板 ID 创建 word 模板")
 	@ResponseBody
-	public ResultData createWordFile(@RequestParam int templateId){
+	public ResultData createWordFile(@RequestParam int templateId,int dbSource_id){
 
-		return fileService.createWord(templateId);
+		return fileService.createWord(templateId,dbSource_id);
 	}
 }

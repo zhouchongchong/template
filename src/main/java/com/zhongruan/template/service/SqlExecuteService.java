@@ -42,8 +42,8 @@ public class SqlExecuteService {
 	DatabaseInfoService databaseInfoService;
 
 
-	public List<Map<String, Object>> sqlExecute(String sql) throws Exception {
-		DatabaseInfo databaseInfo = databaseInfoService.findByName("西方");
+	public List<Map<String, Object>> sqlExecute(String sql,int dbSourceId) throws Exception {
+		DatabaseInfo databaseInfo = databaseInfoService.findById(dbSourceId);
 		String url = databaseInfo.getDatabaseUrl();
 		String user = databaseInfo.getUsername();
 		String pwd = databaseInfo.getPassword();

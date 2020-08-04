@@ -1,5 +1,8 @@
 package com.zhongruan.template;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import com.zhongruan.template.entity.DatabaseInfo;
 import com.zhongruan.template.util.FileUtil;
 import com.zhongruan.template.vo.Constant;
 import freemarker.template.TemplateException;
@@ -60,9 +63,20 @@ public class PathTest {
 		System.out.println(wordPath);
 
 		FileUtil.createWord(ftlPath,wordPath,word);
-
-
 	}
+
+	@Test
+	public void testBeanUtil(){
+		final DatabaseInfo databaseInfo = new DatabaseInfo();
+		databaseInfo.setDatabaseUrl("www.baidu.com");
+		databaseInfo.setDatabaseType("mysql");
+		databaseInfo.setDatabaseName("百度数据库");
+		final String jsonString = JSONObject.toJSONString(databaseInfo);
+		final DatabaseInfo databaseInfo2 = JSONObject.parseObject(jsonString).toJavaObject(DatabaseInfo.class);
+		final DatabaseInfo databaseInfo1 = JSONObject.parseObject(jsonString, DatabaseInfo.class);
+		System.out.println(jsonString);
+	}
+
 
 
 }
