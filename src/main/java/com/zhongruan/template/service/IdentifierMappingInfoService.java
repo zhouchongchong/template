@@ -19,11 +19,12 @@ public class IdentifierMappingInfoService {
     @Autowired
     private IdentifierMappingInfoMapper identifierMappingInfoMapper;
 
-    public IdentifierMappingInfo getById(int id) {
+    public IdentifierMappingInfo getByInfo(int templateId, String identifierName) {
         IdentifierMappingInfo identifierMappingInfo =null;
         IdentifierMappingInfoExample identifierMappingInfoExample=new IdentifierMappingInfoExample();
         IdentifierMappingInfoExample.Criteria criteria = identifierMappingInfoExample.createCriteria();
-        criteria.andIdEqualTo(id);
+        criteria.andTemplateIdEqualTo(templateId);
+        criteria.andIdentifierNameEqualTo(identifierName);
         List<IdentifierMappingInfo> identifierMappingInfos = identifierMappingInfoMapper.selectByExample(identifierMappingInfoExample);
             if(identifierMappingInfos.size()==1){
                 identifierMappingInfo=identifierMappingInfos.get(0);
@@ -36,6 +37,10 @@ public class IdentifierMappingInfoService {
         IdentifierMappingInfoExample.Criteria criteria = identifierMappingInfoExample.createCriteria();
         criteria.andTemplateIdEqualTo(identifierMappingInfo.getTemplateId());
         criteria.andIdentifierNameEqualTo(identifierMappingInfo.getIdentifierName());
+        final List<IdentifierMappingInfo> identifierMappingInfos = identifierMappingInfoMapper.selectByExample(identifierMappingInfoExample);
+        if (identifierMappingInfos.size() == 0){
+            identifierMappingInfoMapper.insertSelective(identifierMappingInfo);
+        }
         int i = identifierMappingInfoMapper.updateByExampleSelective(identifierMappingInfo, identifierMappingInfoExample);
         return i;
     }

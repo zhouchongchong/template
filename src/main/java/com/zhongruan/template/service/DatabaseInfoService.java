@@ -45,7 +45,21 @@ public class DatabaseInfoService {
 
 		}
 		return databaseInfos;
+	}
 
+	public ResultData findByName(String sourceName){
+		String message = Constant.ERROR;
+		ResultData ret = ResultData.success();
+		try {
+			final DatabaseInfoExample databaseInfoExample = new DatabaseInfoExample();
+			databaseInfoExample.createCriteria().andDatabaseNameLike("%"+sourceName+"%");
+			final List<DatabaseInfo> databaseInfos = databaseInfoMapper.selectByExample(databaseInfoExample);
+			ret.setBody(databaseInfos);
+		} catch (Exception e){
+			message = e.getMessage();
+			ret = ResultData.error(message);
+		}
+		return ret;
 	}
 
 	public ResultData deleteDBSource(int dbSourceId) {
@@ -57,7 +71,7 @@ public class DatabaseInfoService {
 			final int delete = databaseInfoMapper.deleteByExample(databaseInfoExample);
 			if(delete != 1){
 				message = "数据库不存在该数据源";
-				ret.setMsg(message);
+				ret.setBody(message);
 			}
 		} catch (Exception e) {
 			log.error("删除数据源失败：{}",e.getMessage());
@@ -70,6 +84,14 @@ public class DatabaseInfoService {
 	public ResultData addDBSource(DatabaseInfo databaseInfo) {
 		String message = Constant.ERROR;
 		try {
+			if(databaseInfo.getId() ==null){
+				final DatabaseInfoExample databaseInfoExample = new DatabaseInfoExample();
+				databaseInfoExample.createCriteria().andIdEqualTo(databaseInfo.getId());
+				final List<DatabaseInfo> databaseInfos = databaseInfoMapper.selectByExample(databaseInfoExample);
+				if (databaseInfos.size() != 0){
+					databaseInfoMapper.updateByExampleSelective(databaseInfo,databaseInfoExample);
+				}
+			}
 			final int selective = databaseInfoMapper.insertSelective(databaseInfo);
 			if (selective == 1) {
 				message = Constant.SUCCESS;

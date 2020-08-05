@@ -5,6 +5,8 @@ import com.alibaba.fastjson.JSONObject;
 import com.zhongruan.template.entity.DatabaseInfo;
 import com.zhongruan.template.massage.ResultData;
 import com.zhongruan.template.service.DatabaseInfoService;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -28,9 +30,11 @@ public class DatabaseInfoController {
 	 */
 	@GetMapping("/listDBSourceTables")
 	@ApiOperation(value = "根据是数据源id查询数据库全部表", notes = "查询数据库全部表")
-	public ResultData listDBSourceTable(int sourceId) {
+	@ApiImplicitParams({@ApiImplicitParam(name = "sourceId",required = true)})
+
+	public ResultData listDBSourceTable(@RequestBody JSONObject params) {
 		try {
-			List<DatabaseInfo> databaseInfos = databaseInfoService.findById(sourceId);
+			List<DatabaseInfo> databaseInfos = databaseInfoService.findById(params.getInteger("sourceId"));
 			Map map = databaseInfoService.listAlltable(databaseInfos.get(0));
 			return ResultData.success(map);
 		} catch (Exception e) {
@@ -53,16 +57,29 @@ public class DatabaseInfoController {
 	}
 
 	@PostMapping("/add_db_source")
-	@ApiOperation(value = "添加数据源")
+	@ApiOperation(value = "添加/修改数据源")
+	@ApiImplicitParams({@ApiImplicitParam(name = "databaseName",required = true),
+			@ApiImplicitParam(name = "databaseUrl",required = true),
+			@ApiImplicitParam(name = "username",required = true),
+			@ApiImplicitParam(name = "password",required = true),
+			@ApiImplicitParam(name = "id")})
 	public ResultData addDBSource(@RequestBody DatabaseInfo jsonObject) {
 		return databaseInfoService.addDBSource(jsonObject);
 	}
 
+	@PostMapping("/db_source_name_like")
+	@ApiOperation(value = "通过name查询数据源")
+	@ApiImplicitParams({@ApiImplicitParam(name = "sourceName",required = true)})
+	public ResultData findByName(@RequestBody JSONObject params){
+		return databaseInfoService.findByName(params.getString("sourceName"));
+	}
+
 	@PostMapping("/dbsource_id")
 	@ApiOperation(value = "通过id查询数据源")
-	public ResultData findById(@RequestParam int sourceId) {
+	@ApiImplicitParams({@ApiImplicitParam(name = "sourceId",required = true)})
+	public ResultData findById(@RequestBody JSONObject sourceId) {
 		try {
-			List<DatabaseInfo> databaseInfo = databaseInfoService.findById(sourceId);
+			List<DatabaseInfo> databaseInfo = databaseInfoService.findById(sourceId.getInteger("sourceId"));
 			return ResultData.success(databaseInfo.get(0));
 		} catch (Exception e) {
 			return ResultData.error(e.getMessage());
@@ -70,22 +87,28 @@ public class DatabaseInfoController {
 	}
 
 	@PostMapping("/update")
-	@ApiOperation(value = "修改数据源")
-	public ResultData findById(@RequestBody DatabaseInfo jsonObject) {
+	@ApiOperation(value = "修改数据源信息")
+	@ApiImplicitParams({@ApiImplicitParam(name = "sourceId",required = true)})
+	public ResultData update(@RequestBody DatabaseInfo jsonObject) {
 		return databaseInfoService.update(jsonObject);
 	}
 
 	@PostMapping("/test_connect")
 	@ApiOperation(value = "测试链接")
-	public ResultData testConnect(@RequestParam DatabaseInfo databaseInfo){
+	@ApiImplicitParams({@ApiImplicitParam(name = "databaseName",required = true),
+			@ApiImplicitParam(name = "databaseUrl",required = true),
+			@ApiImplicitParam(name = "username",required = true),
+			@ApiImplicitParam(name = "password",required = true),})
+	public ResultData testConnect(@RequestBody DatabaseInfo databaseInfo){
 		return databaseInfoService.testConnect(databaseInfo);
 	}
 
 	@PostMapping("/delete_source")
 	@ApiOperation(value = "删除数据源，根据id删除")
-	public ResultData deleteDBSource(@RequestParam int DBSourceId){
+	@ApiImplicitParams({@ApiImplicitParam(name = "DBSourceId",required = true)})
+	public ResultData deleteDBSource(@RequestBody JSONObject object){
 
-		return databaseInfoService.deleteDBSource(DBSourceId);
+		return databaseInfoService.deleteDBSource(object.getInteger("DBSourceId"));
 	}
 }
 
