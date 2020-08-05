@@ -7,6 +7,9 @@ import com.zhongruan.template.massage.ResultData;
 import com.zhongruan.template.service.TextualInfoService;
 import com.zhongruan.template.util.StringUtil;
 import com.zhongruan.template.vo.Constant;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
@@ -36,6 +39,7 @@ public class TextualInfoController {
 	private TextualInfoService textualInfoService;
 
 	@GetMapping("/findAll")
+	@ApiOperation("获取所有电文信息")
 	public ResultData findAll() {
 		List<TextualInfo> all = textualInfoService.getAll();
 		return ResultData.success(all);
@@ -43,6 +47,8 @@ public class TextualInfoController {
 
 	//通过名称获取电文信息
 	@GetMapping("/findByName")
+	@ApiOperation("获取所有电文信息")
+	@ApiImplicitParams({@ApiImplicitParam(name = "textualName",required = true)})
 	public ResultData findByName(@RequestBody JSONObject jsonObject) {
 		String textualName = jsonObject.getString("textualName");
 		List<TextualInfo> textualNameInfos = textualInfoService.findByName(textualName);
@@ -51,6 +57,8 @@ public class TextualInfoController {
 
      //下载接口
 	@GetMapping("/download")
+	@ApiOperation("通过文档id对文档进行下载")
+	@ApiImplicitParams({@ApiImplicitParam(name = "wordId",required = true)})
 	public void downloadWord(HttpServletRequest request, HttpServletResponse response, @RequestBody JSONObject jsonObject){
 		Integer wordId = jsonObject.getInteger("wordId");
 		final TextualInfo word = textualInfoService.findById(wordId);

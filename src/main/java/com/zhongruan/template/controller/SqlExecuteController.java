@@ -4,6 +4,9 @@ package com.zhongruan.template.controller;
 import com.alibaba.fastjson.JSONObject;
 import com.zhongruan.template.massage.ResultData;
 import com.zhongruan.template.service.SqlExecuteService;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,6 +25,9 @@ public class SqlExecuteController {
 	private SqlExecuteService sqlExecuteService;
 
 	@GetMapping("/sqlQuery")
+	@ApiOperation("通过sql查询")
+	@ApiImplicitParams({@ApiImplicitParam(name = "sql",required = true),
+			@ApiImplicitParam(name = "dbSourceId",required = true)})
 	public ResultData sqlQuery(@RequestBody JSONObject jsonObject) {
 		String sql = jsonObject.getString("sql");
 		Integer dbSourceId = jsonObject.getInteger("dbSourceId");

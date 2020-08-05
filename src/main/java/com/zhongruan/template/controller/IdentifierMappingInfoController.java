@@ -15,13 +15,13 @@ import org.springframework.web.bind.annotation.*;
  * @Date 2020/8/3 0:29
  */
 @RestController
-@RequestMapping("identifierMappingInfo")
+@RequestMapping("/identifierMappingInfo")
 public class IdentifierMappingInfoController {
 	@Autowired
 	private IdentifierMappingInfoService identifierMappingInfoService;
 
 	//通过标识符id获取sql
-	@PostMapping("findSQL")
+	@PostMapping("/findSQL")
 	@ApiImplicitParams({@ApiImplicitParam(name = "templateId", required = true),
 			@ApiImplicitParam(name = "identiferName", required = true)})
 	@ApiOperation(value = "通过获取sql")
