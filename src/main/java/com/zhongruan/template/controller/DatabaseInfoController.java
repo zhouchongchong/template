@@ -64,7 +64,10 @@ public class DatabaseInfoController {
 			@ApiImplicitParam(name = "password",required = true),
 			@ApiImplicitParam(name = "id")})
 	public ResultData addDBSource(@RequestBody DatabaseInfo jsonObject) {
-		return databaseInfoService.addDBSource(jsonObject);
+		final ResultData resultData = databaseInfoService.addDBSource(jsonObject);
+		List<DatabaseInfo> databaseInfo = databaseInfoService.findById(0);
+		resultData.setBody(databaseInfo);
+		return resultData;
 	}
 
 	@PostMapping("/db_source_name_like")
@@ -107,8 +110,10 @@ public class DatabaseInfoController {
 	@ApiOperation(value = "删除数据源，根据id删除")
 	@ApiImplicitParams({@ApiImplicitParam(name = "DBSourceId",required = true)})
 	public ResultData deleteDBSource(@RequestBody JSONObject object){
-
-		return databaseInfoService.deleteDBSource(object.getInteger("DBSourceId"));
+		final ResultData dbSourceId = databaseInfoService.deleteDBSource(object.getInteger("DBSourceId"));
+		List<DatabaseInfo> databaseInfo = databaseInfoService.findById(0);
+		dbSourceId.setBody(databaseInfo);
+		return dbSourceId;
 	}
 }
 

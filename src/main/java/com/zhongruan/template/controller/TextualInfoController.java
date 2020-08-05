@@ -18,10 +18,8 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.BufferedInputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
+import java.io.*;
+import java.net.URLEncoder;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Random;
@@ -46,7 +44,7 @@ public class TextualInfoController {
 	}
 
 	//通过名称获取电文信息
-	@GetMapping("/findByName")
+	@PostMapping("/findByName")
 	@ApiOperation("获取所有电文信息")
 	@ApiImplicitParams({@ApiImplicitParam(name = "textualName",required = true)})
 	public ResultData findByName(@RequestBody JSONObject jsonObject) {
@@ -56,10 +54,14 @@ public class TextualInfoController {
 	}
 
      //下载接口
-	@GetMapping("/download")
+	@PostMapping("/download")
 	@ApiOperation("通过文档id对文档进行下载")
 	@ApiImplicitParams({@ApiImplicitParam(name = "wordId",required = true)})
-	public void downloadWord(HttpServletRequest request, HttpServletResponse response, @RequestBody JSONObject jsonObject){
+	public void downloadWord(HttpServletResponse response, @RequestBody JSONObject jsonObject) throws UnsupportedEncodingException {
+//	 @GetMapping("/download")
+//	 @ApiOperation("通过文档id对文档进行下载")
+//	 @ApiImplicitParams({@ApiImplicitParam(name = "wordId",required = true)})
+//	 public void downloadWord(HttpServletResponse response, int wordId) throws UnsupportedEncodingException {
 		Integer wordId = jsonObject.getInteger("wordId");
 		final TextualInfo word = textualInfoService.findById(wordId);
 
@@ -72,8 +74,8 @@ public class TextualInfoController {
 		final File file = new File(word.getTextualUrl());
 		log.info("下载文件：{},path:{}",fileName,file);
 		if (file.exists()){
-			response.setContentType("application/force-download");
-			response.setHeader("Content-Disposition", "attachment; filename=" + LocalDate.now() + StringUtil.randomStr() + Constant.SUFF_DOC);
+			response.setContentType("application/octet-stream");
+			response.setHeader("Content-Disposition", String.format("attachment; filename=\"%s\"", URLEncoder.encode(fileName, "utf-8")));
 
 			byte[] buffer = new byte[1024];
 			FileInputStream fis = null;

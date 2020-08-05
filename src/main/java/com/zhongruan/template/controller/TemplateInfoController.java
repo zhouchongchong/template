@@ -44,8 +44,6 @@ public class TemplateInfoController {
 
     @GetMapping("/findAll")
     @ApiOperation("获取所有模板信息")
-    @ApiImplicitParams({@ApiImplicitParam(name = "sql",required = true),
-            @ApiImplicitParam(name = "dbSourceId",required = true)})
     public ResultData findAll() {
         List<TemplateInfo> all = templateInfoService.getAll();
         return ResultData.success(all);
@@ -60,11 +58,18 @@ public class TemplateInfoController {
         List<TemplateInfo> templateInfos = templateInfoService.findByName(templateName);
         return ResultData.success(templateInfos);
     }
+
+
     @PostMapping("/delete")
     @ApiOperation("通过id删除模板信息")
     @ApiImplicitParams({@ApiImplicitParam(name = "templateId",required = true)})
     public ResultData deleteTemplateById(@RequestBody JSONObject jsonObject){
         Integer templateId = jsonObject.getInteger("templateId");
-        return templateInfoService.deleteById(templateId);
+        final ResultData resultData = templateInfoService.deleteById(templateId);
+        if (resultData.getCode() == 0){
+            List<TemplateInfo> all = templateInfoService.getAll();
+            return ResultData.success(all);
+        }
+        return ResultData.error("删除模板失败");
     }
 }

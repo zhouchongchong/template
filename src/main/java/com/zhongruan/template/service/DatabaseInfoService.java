@@ -47,15 +47,15 @@ public class DatabaseInfoService {
 		return databaseInfos;
 	}
 
-	public ResultData findByName(String sourceName){
+	public ResultData findByName(String sourceName) {
 		String message = Constant.ERROR;
 		ResultData ret = ResultData.success();
 		try {
 			final DatabaseInfoExample databaseInfoExample = new DatabaseInfoExample();
-			databaseInfoExample.createCriteria().andDatabaseNameLike("%"+sourceName+"%");
+			databaseInfoExample.createCriteria().andDatabaseNameLike("%" + sourceName + "%");
 			final List<DatabaseInfo> databaseInfos = databaseInfoMapper.selectByExample(databaseInfoExample);
 			ret.setBody(databaseInfos);
-		} catch (Exception e){
+		} catch (Exception e) {
 			message = e.getMessage();
 			ret = ResultData.error(message);
 		}
@@ -69,12 +69,12 @@ public class DatabaseInfoService {
 			final DatabaseInfoExample databaseInfoExample = new DatabaseInfoExample();
 			databaseInfoExample.createCriteria().andIdEqualTo(dbSourceId);
 			final int delete = databaseInfoMapper.deleteByExample(databaseInfoExample);
-			if(delete != 1){
+			if (delete != 1) {
 				message = "数据库不存在该数据源";
 				ret.setBody(message);
 			}
 		} catch (Exception e) {
-			log.error("删除数据源失败：{}",e.getMessage());
+			log.error("删除数据源失败：{}", e.getMessage());
 			ret = ResultData.error(message);
 		}
 
@@ -84,12 +84,12 @@ public class DatabaseInfoService {
 	public ResultData addDBSource(DatabaseInfo databaseInfo) {
 		String message = Constant.ERROR;
 		try {
-			if(databaseInfo.getId() ==null){
+			if (databaseInfo.getId() != null) {
 				final DatabaseInfoExample databaseInfoExample = new DatabaseInfoExample();
 				databaseInfoExample.createCriteria().andIdEqualTo(databaseInfo.getId());
 				final List<DatabaseInfo> databaseInfos = databaseInfoMapper.selectByExample(databaseInfoExample);
-				if (databaseInfos.size() != 0){
-					databaseInfoMapper.updateByExampleSelective(databaseInfo,databaseInfoExample);
+				if (databaseInfos.size() != 0) {
+					databaseInfoMapper.updateByExampleSelective(databaseInfo, databaseInfoExample);
 				}
 			}
 			final int selective = databaseInfoMapper.insertSelective(databaseInfo);

@@ -108,11 +108,10 @@ public class FileService {
 	 * 3.插入数据库
 	 *
 	 * @param file
-	 * @param templateName
 	 * @return
 	 */
 	@Transient
-	public ResultData dealHtmlFile(MultipartFile file, String templateName) {
+	public ResultData dealHtmlFile(MultipartFile file) {
 		log.info("word_path:{},xml_path:{},ftl_path:{},html_path:{}", word_file_path,
 				xml_file_path, ftl_file_path, html_file_path);
 		String message = "";
@@ -147,7 +146,7 @@ public class FileService {
 			log.info("after deal html file:{},需要绑定的 SQL 数量：{}", showHTMLFile, replaceNum);
 
 			final TemplateInfo templateInfo = new TemplateInfo();
-			templateInfo.setTemplateName(templateName);
+			templateInfo.setTemplateName(file.getOriginalFilename().split("\\.")[0]);
 			templateInfo.setTemplateHtmlUrl(showHTMLFile);
 			templateInfo.setTemplateFtlUrl(ftlFilePath);
 
@@ -178,7 +177,7 @@ public class FileService {
 	}
 
 
-	public ResultData createWord(int templateId,int dbSourceId) {
+	public ResultData      createWord(int templateId,int dbSourceId) {
 		log.info("create word template");
 		final IdentifierMappingInfoExample infoExample = new IdentifierMappingInfoExample();
 		infoExample.createCriteria().andTemplateIdEqualTo(templateId);
@@ -226,6 +225,6 @@ public class FileService {
 		textualInfoMapper.insertSelective(textualInfo);
 		log.info("create word success,ftlPath:{}, docPath:{}",templateInfos.get(0).getTemplateFtlUrl(),wordPath);
 
-		return ResultData.success(wordPath);
+		return ResultData.success(textualInfo);
 	}
 }

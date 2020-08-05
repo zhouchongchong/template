@@ -9,6 +9,7 @@ import freemarker.template.TemplateException;
 import org.apache.commons.lang3.StringEscapeUtils;
 import org.apache.logging.log4j.message.StringFormattedMessage;
 import org.junit.Test;
+import sun.reflect.generics.tree.VoidDescriptor;
 
 import java.io.File;
 import java.io.IOException;
@@ -76,7 +77,12 @@ public class PathTest {
 		final DatabaseInfo databaseInfo1 = JSONObject.parseObject(jsonString, DatabaseInfo.class);
 		System.out.println(jsonString);
 	}
-
+	@Test
+	public void testSpilt(){
+		String str = "config.zip";
+		final String[] split = str.split("\\.");
+		System.out.println(split);
+	}
 
 
 }
