@@ -26,13 +26,27 @@ public class DatabaseInfoController {
 	/**
 	 * 列出所有table
 	 */
-	@GetMapping("/getAll")
-	@ApiOperation(value = "查询数据库全部表", notes = "查询数据库全部表")
-	public ResultData listAlltable() {
+	@GetMapping("/listDBSourceTables")
+	@ApiOperation(value = "根据是数据源id查询数据库全部表", notes = "查询数据库全部表")
+	public ResultData listDBSourceTable(int sourceId) {
 		try {
-			DatabaseInfo databaseInfo = databaseInfoService.findById(0);
-			Map map = databaseInfoService.listAlltable(databaseInfo);
+			List<DatabaseInfo> databaseInfos = databaseInfoService.findById(sourceId);
+			Map map = databaseInfoService.listAlltable(databaseInfos.get(0));
 			return ResultData.success(map);
+		} catch (Exception e) {
+			return ResultData.error(e.getMessage());
+		}
+	}
+
+	/**
+	 * 列出所有table
+	 */
+	@GetMapping("/list")
+	@ApiOperation(value = "查询所有数据源", notes = "查询数据库全部表")
+	public ResultData findAll() {
+		try {
+			List<DatabaseInfo> databaseInfo = databaseInfoService.findById(0);
+			return ResultData.success(databaseInfo);
 		} catch (Exception e) {
 			return ResultData.error(e.getMessage());
 		}
@@ -48,9 +62,8 @@ public class DatabaseInfoController {
 	@ApiOperation(value = "通过id查询数据源")
 	public ResultData findById(@RequestParam int sourceId) {
 		try {
-			DatabaseInfo databaseInfo = databaseInfoService.findById(sourceId);
-			Map map = databaseInfoService.listAlltable(databaseInfo);
-			return ResultData.success(map);
+			List<DatabaseInfo> databaseInfo = databaseInfoService.findById(sourceId);
+			return ResultData.success(databaseInfo.get(0));
 		} catch (Exception e) {
 			return ResultData.error(e.getMessage());
 		}
@@ -66,6 +79,13 @@ public class DatabaseInfoController {
 	@ApiOperation(value = "测试链接")
 	public ResultData testConnect(@RequestParam DatabaseInfo databaseInfo){
 		return databaseInfoService.testConnect(databaseInfo);
+	}
+
+	@PostMapping("/delete_source")
+	@ApiOperation(value = "删除数据源，根据id删除")
+	public ResultData deleteDBSource(@RequestParam int DBSourceId){
+
+		return databaseInfoService.deleteDBSource(DBSourceId);
 	}
 }
 
