@@ -170,7 +170,7 @@ public class DatabaseInfoService {
 		return ResultData.success(message);
 	}
 
-	public Map listAlltable(DatabaseInfo databaseInfo) throws Exception {
+	public List<String> listAlltable(DatabaseInfo databaseInfo) throws Exception {
 		String url = databaseInfo.getDatabaseUrl();
 		String user = databaseInfo.getUsername();
 		String pwd = databaseInfo.getPassword();
@@ -181,6 +181,12 @@ public class DatabaseInfoService {
 		}
 		if ("oracle".equals(bdtype)) {
 			driverClass = "oracle.jdbc.driver.OracleDriver";
+		}
+		if ("dm".equals(bdtype)) {
+			driverClass = "dm.jdbc.driver.DmDriver";
+		}
+		if ("hive".equals(bdtype)) {
+			driverClass = "org.apache.hive.jdbc.HiveDriver";
 		}
 		// 获取连接地址
 		String[] urls = StringUtils.split(StringUtils.split(url, "?")[0], "/");
@@ -195,8 +201,7 @@ public class DatabaseInfoService {
 		} catch (Exception e) {
 			throw new Exception("请添加数据库");
 		}
-
-		Map<String, List<FieldBean>> map = new HashMap<>();
+		List<String> list = new ArrayList<>();
 		try {
 			Class.forName(driverClass);
 			con = DriverManager.getConnection(url, user, pwd);
@@ -208,28 +213,13 @@ public class DatabaseInfoService {
 			//获取一个库下所有的表名对象
 			ResultSet rs = dbMetaData.getTables(catalog, schemaName, "%", types);
 			String tableName = null;
+
 			//遍历resultSet对象
 			while (rs.next()) {
-				List<FieldBean> list = new ArrayList<>();
 				//分别获取表名
 				tableName = rs.getString("TABLE_NAME");
-				//获取指定表的ResultSet对象
-				ResultSet resultSet = dbMetaData.getColumns(catalog, null, tableName, null);
-
-				while (resultSet.next()) {
-					FieldBean fieldBean = new FieldBean();
-					//获取字段名称
-					String name = resultSet.getString("COLUMN_NAME");
-					String columnType = resultSet.getString("TYPE_NAME");
-
-					fieldBean.setFieldName(name);
-					fieldBean.setFieldType(columnType);
-					fieldBean.setFieldDes(resultSet.getString("REMARKS"));
-					list.add(fieldBean);
-				}
-				map.put(tableName, list);
+				list.add(tableName);
 			}
-
 
 		} catch (SQLException e) {
 			throw new Exception(e.getMessage());
@@ -243,7 +233,76 @@ public class DatabaseInfoService {
 				}
 			}
 		}
-		return map;
+		return list;
+	}
+
+	public List<FieldBean> findTableColumn(String tableName,DatabaseInfo databaseInfo) throws Exception{
+		List<FieldBean> list = new ArrayList<>();
+		String url = databaseInfo.getDatabaseUrl();
+		String user = databaseInfo.getUsername();
+		String pwd = databaseInfo.getPassword();
+		String bdtype = databaseInfo.getDatabaseType();
+		String driverClass = "";
+		if ("mysql".equals(bdtype)) {
+			driverClass = "com.mysql.jdbc.Driver";
+		}
+		if ("oracle".equals(bdtype)) {
+			driverClass = "oracle.jdbc.driver.OracleDriver";
+		}
+		if ("dm".equals(bdtype)) {
+			driverClass = "dm.jdbc.driver.DmDriver";
+		}
+		if ("hive".equals(bdtype)) {
+			driverClass = "org.apache.hive.jdbc.HiveDriver";
+		}
+		// 获取连接地址
+		String[] urls = StringUtils.split(StringUtils.split(url, "?")[0], "/");
+		String schemaName = urls[urls.length - 1];
+		Connection con = null;
+		DatabaseMetaData dbMetaData = null;
+		String catalog = null;
+		try {
+			if (url.contains("mysql")) {
+				catalog = url.split(":")[3].split("/")[1].split("\\?")[0];
+			}
+		} catch (Exception e) {
+			throw new Exception("请添加数据库");
+		}
+		try {
+			Class.forName(driverClass);
+			con = DriverManager.getConnection(url, user, pwd);
+			if (con.isClosed()) {
+				con = DriverManager.getConnection(url, user, pwd);
+			}
+			dbMetaData = con.getMetaData();
+
+		//获取指定表的ResultSet对象
+		ResultSet resultSet = dbMetaData.getColumns(catalog, null, tableName, null);
+
+		while (resultSet.next()) {
+			FieldBean fieldBean = new FieldBean();
+			//获取字段名称
+			String name = resultSet.getString("COLUMN_NAME");
+			String columnType = resultSet.getString("TYPE_NAME");
+
+			fieldBean.setFieldName(name);
+			fieldBean.setFieldType(columnType);
+			fieldBean.setFieldDes(resultSet.getString("REMARKS"));
+			list.add(fieldBean);
+	}
+		} catch (SQLException e) {
+			throw new Exception(e.getMessage());
+		} finally {
+			if (con != null) {
+				try {
+					con.close();
+
+				} catch (SQLException throwables) {
+					throwables.printStackTrace();
+				}
+			}
+		}
+		return list;
 	}
 }
 
