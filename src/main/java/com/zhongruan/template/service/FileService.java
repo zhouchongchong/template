@@ -144,9 +144,6 @@ public class FileService {
 			if (replaceNum == 0) {
 				return ResultData.error("模板綁定 SQL 页面生成失败");
 			}
-
-
-
 			log.info("after deal html file:{},需要绑定的 SQL 数量：{}", showHTMLFile, replaceNum);
 
 			final TemplateInfo templateInfo = new TemplateInfo();

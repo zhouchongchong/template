@@ -37,6 +37,11 @@ public class IdentifierMappingInfoController {
 	@ApiOperation(value = "新增/更新 X sql ")
 	public ResultData updateSql(@RequestBody IdentifierMappingInfo identifierMappingInfo) {
 		int i = identifierMappingInfoService.updateSql(identifierMappingInfo);
-		return ResultData.success(i);
+		if(i==1){
+			return ResultData.success(i);
+		}else{
+			return ResultData.error("sql更新失败");
+		}
+
 	}
 }
