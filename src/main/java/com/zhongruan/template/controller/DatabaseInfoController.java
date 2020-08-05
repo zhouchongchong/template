@@ -17,7 +17,7 @@ import java.util.Map;
  * @Date 2020/8/2 18:08
  */
 @RestController
-@RequestMapping
+@RequestMapping("/databaseInfo")
 public class DatabaseInfoController {
 	@Autowired
 	private DatabaseInfoService databaseInfoService;

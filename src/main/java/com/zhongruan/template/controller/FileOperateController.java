@@ -13,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
  * @Description:
  */
 @RestController
+@RequestMapping("/fileOperate")
 public class FileOperateController {
 
 	@Autowired

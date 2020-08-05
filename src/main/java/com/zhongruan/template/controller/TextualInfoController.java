@@ -1,5 +1,6 @@
 package com.zhongruan.template.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.zhongruan.template.entity.TemplateInfo;
 import com.zhongruan.template.entity.TextualInfo;
 import com.zhongruan.template.massage.ResultData;
@@ -34,25 +35,24 @@ public class TextualInfoController {
 	@Autowired
 	private TextualInfoService textualInfoService;
 
-	@ResponseBody
 	@GetMapping("/findAll")
 	public ResultData findAll() {
 		List<TextualInfo> all = textualInfoService.getAll();
-
-
 		return ResultData.success(all);
 	}
 
-	//通过名称获取模板信息
+	//通过名称获取电文信息
 	@GetMapping("/findByName")
-	@ResponseBody
-	public ResultData findByName(@RequestParam(value = "templateName") String templateName) {
-		List<TextualInfo> templateInfos = textualInfoService.findByName(templateName);
-		return ResultData.success(templateInfos);
+	public ResultData findByName(@RequestBody JSONObject jsonObject) {
+		String textualName = jsonObject.getString("textualName");
+		List<TextualInfo> textualNameInfos = textualInfoService.findByName(textualName);
+		return ResultData.success(textualNameInfos);
 	}
 
+     //下载接口
 	@GetMapping("/download")
-	public void downloadWord(HttpServletRequest request, HttpServletResponse response, @RequestParam int wordId){
+	public void downloadWord(HttpServletRequest request, HttpServletResponse response, @RequestBody JSONObject jsonObject){
+		Integer wordId = jsonObject.getInteger("wordId");
 		final TextualInfo word = textualInfoService.findById(wordId);
 
 		if (StringUtils.isEmpty(word)){

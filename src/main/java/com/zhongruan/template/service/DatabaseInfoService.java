@@ -112,6 +112,12 @@ public class DatabaseInfoService {
 		if ("oracle".equals(bdtype)) {
 			driverClass = "oracle.jdbc.driver.OracleDriver";
 		}
+		if ("dm".equals(bdtype)) {
+			driverClass = "dm.jdbc.driver.DmDriver";
+		}
+		if ("hive".equals(bdtype)) {
+			driverClass = "org.apache.hive.jdbc.HiveDriver";
+		}
 		// 获取连接地址
 		String[] urls = StringUtils.split(StringUtils.split(url, "?")[0], "/");
 		Connection con = null;

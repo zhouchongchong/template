@@ -1,13 +1,11 @@
 
 package com.zhongruan.template.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.zhongruan.template.massage.ResultData;
 import com.zhongruan.template.service.SqlExecuteService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,11 +17,14 @@ import java.util.List;
 @RestController
 @RequestMapping("/sqlExecute")
 public class SqlExecuteController {
+
 	@Autowired
 	private SqlExecuteService sqlExecuteService;
 
 	@GetMapping("/sqlQuery")
-	public ResultData sqlQuery(@RequestParam("sql") String sql,@RequestParam int dbSourceId) {
+	public ResultData sqlQuery(@RequestBody JSONObject jsonObject) {
+		String sql = jsonObject.getString("sql");
+		Integer dbSourceId = jsonObject.getInteger("dbSourceId");
 		Object ret;
 		try {
 			ret = sqlExecuteService.sqlExecute(sql,dbSourceId);

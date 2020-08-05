@@ -55,6 +55,12 @@ public class SqlExecuteService {
 		if ("oracle".equals(bdtype)) {
 			driverClass = "oracle.jdbc.driver.OracleDriver";
 		}
+		if ("dm".equals(bdtype)) {
+			driverClass = "dm.jdbc.driver.DmDriver";
+		}
+		if ("hive".equals(bdtype)) {
+			driverClass = "org.apache.hive.jdbc.HiveDriver";
+		}
 		// 获取连接地址
 		Connection con = null;
 		PreparedStatement ps = null;

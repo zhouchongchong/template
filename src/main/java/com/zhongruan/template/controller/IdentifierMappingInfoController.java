@@ -11,13 +11,13 @@ import org.springframework.web.bind.annotation.*;
  * @Date 2020/8/3 0:29
  */
 @RestController
-@RequestMapping("identifierMappingInfo")
+@RequestMapping("/identifierMappingInfo")
 public class IdentifierMappingInfoController {
     @Autowired
     private IdentifierMappingInfoService identifierMappingInfoService;
 
     //通过标识符id获取sql
-    @GetMapping("findById")
+    @GetMapping("/findById")
     public ResultData findById(@RequestParam("id") int id){
         IdentifierMappingInfo identifierMappingInfo = identifierMappingInfoService.getById(id);
         return ResultData.success(identifierMappingInfo.getSqlContext());
