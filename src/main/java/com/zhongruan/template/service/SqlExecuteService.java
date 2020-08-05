@@ -27,7 +27,7 @@ public class SqlExecuteService {
 
 
 	public List<Map<String, Object>> sqlExecute(String sql,int dbSourceId) throws Exception {
-		DatabaseInfo databaseInfo = databaseInfoService.findById(dbSourceId).get(0);
+		DatabaseInfo databaseInfo = databaseInfoService.findById(dbSourceId,0).get(0);
 		String url = databaseInfo.getDatabaseUrl();
 		String user = databaseInfo.getUsername();
 		String pwd = databaseInfo.getPassword();

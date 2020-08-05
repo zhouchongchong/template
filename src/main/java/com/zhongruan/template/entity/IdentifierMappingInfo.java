@@ -40,7 +40,7 @@ public class IdentifierMappingInfo {
     }
 
     public String getSqlContext() {
-        return sqlContext;
+        return sqlContext==null?"":sqlContext;
     }
 
     public void setSqlContext(String sqlContext) {

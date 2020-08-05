@@ -168,6 +168,7 @@ public class FileService {
 			if (effortRow == 1) {
 				message = "上传模板成功";
 			}
+			log.info(message);
 		} catch (Exception e) {
 			log.error("解压 HTML 模板文件失败");
 			message = "插入数据库失败";
@@ -177,17 +178,23 @@ public class FileService {
 	}
 
 
-	public ResultData      createWord(int templateId,int dbSourceId) {
+	public ResultData createWord(int templateId,int dbSourceId) {
 		log.info("create word template");
 		final IdentifierMappingInfoExample infoExample = new IdentifierMappingInfoExample();
 		infoExample.createCriteria().andTemplateIdEqualTo(templateId);
 		final List<IdentifierMappingInfo> identifierMappingInfos = identifierMappingInfoMapper.selectByExample(infoExample);
 		final HashMap<String, Object> map = new HashMap<>();
 		String wordPath = null;
+
+		TemplateInfo templateInfo = templateInfoMapper.selectByPrimaryKey(templateId);
+
 		for (IdentifierMappingInfo identifier : identifierMappingInfos) {
 			if (StringUtils.isEmpty(identifier.getSqlContext()))
 				continue;
 			try {
+				if (dbSourceId == 0){
+					dbSourceId = templateInfo.getDbSourceId();
+				}
 				final List<Map<String, Object>> list = sqlExecuteService.sqlExecute(identifier.getSqlContext(),dbSourceId);
 				if (list == null)
 					return ResultData.error("sql 执行出错");
@@ -205,25 +212,23 @@ public class FileService {
 				return ResultData.error("sql 执行出错");
 			}
 		}
-		final TemplateInfoExample templateInfoExample = new TemplateInfoExample();
-		templateInfoExample.createCriteria().andIdEqualTo(templateId);
-		final List<TemplateInfo> templateInfos = templateInfoMapper.selectByExample(templateInfoExample);
-		if (StringUtils.isEmpty(templateInfos.get(0).getTemplateFtlUrl())){
+
+		if (StringUtils.isEmpty(templateInfo.getTemplateFtlUrl())){
 			return ResultData.error("ftl 模板未上传");
 		}
 		wordPath = word_file_path + System.currentTimeMillis() + Constant.SUFF_DOC;
 		try {
-			FileUtil.createWord(templateInfos.get(0).getTemplateFtlUrl(),wordPath,map);
+			FileUtil.createWord(templateInfo.getTemplateFtlUrl(),wordPath,map);
 		} catch (IOException |TemplateException e) {
 			log.error("create word error:{}",e.getMessage());
 			return ResultData.error(e.getMessage());
 		}
 		final TextualInfo textualInfo = new TextualInfo();
 		textualInfo.setTemplateId(templateId);
-		textualInfo.setTextualName(templateInfos.get(0).getTemplateName() + Constant.SUFF_DOC);
+		textualInfo.setTextualName(templateInfo.getTemplateName());
 		textualInfo.setTextualUrl(wordPath);
 		textualInfoMapper.insertSelective(textualInfo);
-		log.info("create word success,ftlPath:{}, docPath:{}",templateInfos.get(0).getTemplateFtlUrl(),wordPath);
+		log.info("create word success,ftlPath:{}, docPath:{}",templateInfo.getTemplateFtlUrl(),wordPath);
 
 		return ResultData.success(textualInfo);
 	}

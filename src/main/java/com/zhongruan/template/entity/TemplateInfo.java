@@ -1,8 +1,7 @@
 package com.zhongruan.template.entity;
 
-import org.apache.ibatis.annotations.Mapper;
-
 import java.util.Date;
+
 public class TemplateInfo {
     private Integer id;
 
@@ -13,6 +12,8 @@ public class TemplateInfo {
     private String templateHtmlUrl;
 
     private String templateFtlUrl;
+
+    private Integer dbSourceId;
 
     public Integer getId() {
         return id;
@@ -52,5 +53,13 @@ public class TemplateInfo {
 
     public void setTemplateFtlUrl(String templateFtlUrl) {
         this.templateFtlUrl = templateFtlUrl == null ? null : templateFtlUrl.trim();
+    }
+
+    public Integer getDbSourceId() {
+        return dbSourceId;
+    }
+
+    public void setDbSourceId(Integer dbSourceId) {
+        this.dbSourceId = dbSourceId;
     }
 }

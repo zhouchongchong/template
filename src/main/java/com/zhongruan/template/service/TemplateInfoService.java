@@ -1,14 +1,18 @@
 package com.zhongruan.template.service;
 
+import com.alibaba.fastjson.JSONObject;
 import com.zhongruan.template.dao.TemplateInfoMapper;
 import com.zhongruan.template.entity.TemplateInfo;
 import com.zhongruan.template.entity.TemplateInfoExample;
 import com.zhongruan.template.massage.ResultData;
+import com.zhongruan.template.util.FileUtil;
 import com.zhongruan.template.vo.Constant;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
 
+import java.io.File;
 import java.util.List;
 
 /**
@@ -51,6 +55,18 @@ public class TemplateInfoService {
         }
         return templateInfos.get(0);
     }
+
+    public ResultData getHTMLFileContext(int templateId){
+		final TemplateInfoExample templateInfoExample = new TemplateInfoExample();
+		templateInfoExample.createCriteria().andIdEqualTo(templateId);
+		final List<TemplateInfo> templateInfos = templateInfoMapper.selectByExample(templateInfoExample);
+		final TemplateInfo templateInfo = templateInfos.get(0);
+		final String fileContent = FileUtil.readFileContent(templateInfo.getTemplateHtmlUrl());
+		final JSONObject object = new JSONObject();
+		object.put("html_context",fileContent);
+		return ResultData.success(object);
+	}
+
 
     public ResultData deleteById(int templateId){
 		String message = Constant.ERROR;

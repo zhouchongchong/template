@@ -27,7 +27,11 @@ public class IdentifierMappingInfoController {
 	@ApiOperation(value = "通过获取sql")
 	public ResultData getByInfo(@RequestBody JSONObject params) {
 		IdentifierMappingInfo identifierMappingInfo = identifierMappingInfoService.getByInfo(params.getInteger("templateId"), params.getString("identiferName"));
-		return ResultData.success(identifierMappingInfo.getSqlContext());
+		String sql = "";
+		if (identifierMappingInfo != null){
+			sql = identifierMappingInfo.getSqlContext();
+		}
+		return ResultData.success(sql);
 	}
 
 	@PostMapping("/updateSql")

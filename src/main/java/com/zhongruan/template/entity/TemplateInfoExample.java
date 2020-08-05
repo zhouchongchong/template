@@ -1,10 +1,9 @@
 package com.zhongruan.template.entity;
 
-import org.apache.ibatis.annotations.Mapper;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
 public class TemplateInfoExample {
     protected String orderByClause;
 
@@ -433,6 +432,66 @@ public class TemplateInfoExample {
 
         public Criteria andTemplateFtlUrlNotBetween(String value1, String value2) {
             addCriterion("template_ftl_url not between", value1, value2, "templateFtlUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andDbSourceIdIsNull() {
+            addCriterion("db_source_id is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andDbSourceIdIsNotNull() {
+            addCriterion("db_source_id is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andDbSourceIdEqualTo(Integer value) {
+            addCriterion("db_source_id =", value, "dbSourceId");
+            return (Criteria) this;
+        }
+
+        public Criteria andDbSourceIdNotEqualTo(Integer value) {
+            addCriterion("db_source_id <>", value, "dbSourceId");
+            return (Criteria) this;
+        }
+
+        public Criteria andDbSourceIdGreaterThan(Integer value) {
+            addCriterion("db_source_id >", value, "dbSourceId");
+            return (Criteria) this;
+        }
+
+        public Criteria andDbSourceIdGreaterThanOrEqualTo(Integer value) {
+            addCriterion("db_source_id >=", value, "dbSourceId");
+            return (Criteria) this;
+        }
+
+        public Criteria andDbSourceIdLessThan(Integer value) {
+            addCriterion("db_source_id <", value, "dbSourceId");
+            return (Criteria) this;
+        }
+
+        public Criteria andDbSourceIdLessThanOrEqualTo(Integer value) {
+            addCriterion("db_source_id <=", value, "dbSourceId");
+            return (Criteria) this;
+        }
+
+        public Criteria andDbSourceIdIn(List<Integer> values) {
+            addCriterion("db_source_id in", values, "dbSourceId");
+            return (Criteria) this;
+        }
+
+        public Criteria andDbSourceIdNotIn(List<Integer> values) {
+            addCriterion("db_source_id not in", values, "dbSourceId");
+            return (Criteria) this;
+        }
+
+        public Criteria andDbSourceIdBetween(Integer value1, Integer value2) {
+            addCriterion("db_source_id between", value1, value2, "dbSourceId");
+            return (Criteria) this;
+        }
+
+        public Criteria andDbSourceIdNotBetween(Integer value1, Integer value2) {
+            addCriterion("db_source_id not between", value1, value2, "dbSourceId");
             return (Criteria) this;
         }
     }

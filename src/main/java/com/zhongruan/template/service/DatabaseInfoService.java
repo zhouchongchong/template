@@ -3,8 +3,10 @@ package com.zhongruan.template.service;
 
 import com.alibaba.fastjson.JSONObject;
 import com.zhongruan.template.dao.DatabaseInfoMapper;
+import com.zhongruan.template.dao.TemplateInfoMapper;
 import com.zhongruan.template.entity.DatabaseInfo;
 import com.zhongruan.template.entity.DatabaseInfoExample;
+import com.zhongruan.template.entity.TemplateInfo;
 import com.zhongruan.template.massage.ResultData;
 import com.zhongruan.template.vo.Constant;
 import com.zhongruan.template.vo.FieldBean;
@@ -29,10 +31,18 @@ import java.util.Map;
 public class DatabaseInfoService {
 	@Autowired
 	private DatabaseInfoMapper databaseInfoMapper;
+	@Autowired
+	private TemplateInfoMapper templateInfoMapper;
 
 	//用于获取数据源对象
-	public List<DatabaseInfo> findById(int dbSourceId) {
+	public List<DatabaseInfo> findById(int dbSourceId,int templateId) {
 		DatabaseInfoExample databaseInfoExample = new DatabaseInfoExample();
+		if (templateId !=0){
+			final TemplateInfo templateInfo = new TemplateInfo();
+			templateInfo.setId(templateId);
+			templateInfo.setDbSourceId(dbSourceId);
+			templateInfoMapper.updateByPrimaryKeySelective(templateInfo);
+		}
 
 		DatabaseInfoExample.Criteria criteria = databaseInfoExample.createCriteria();
 		if (dbSourceId != 0) {

@@ -69,7 +69,7 @@ public class TextualInfoController {
 			return ;
 		}
 
-		String fileName = word.getTextualName();
+  		String fileName = word.getTextualName();
 
 		final File file = new File(word.getTextualUrl());
 		log.info("下载文件：{},path:{}",fileName,file);

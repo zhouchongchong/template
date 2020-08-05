@@ -79,7 +79,7 @@ public class PathTest {
 	}
 	@Test
 	public void testSpilt(){
-		String str = "config.zip";
+		String str = "周冲测试1.doc";
 		final String[] split = str.split("\\.");
 		System.out.println(split);
 	}

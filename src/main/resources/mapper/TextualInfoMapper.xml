@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.zhongruan.template.dao.TextualInfoMapper">
   <resultMap id="BaseResultMap" type="com.zhongruan.template.entity.TextualInfo">
-    <result column="id" jdbcType="INTEGER" property="id" />
+    <id column="id" jdbcType="INTEGER" property="id" />
     <result column="template_id" jdbcType="INTEGER" property="templateId" />
     <result column="textual_name" jdbcType="VARCHAR" property="textualName" />
     <result column="textual_url" jdbcType="VARCHAR" property="textualUrl" />
@@ -84,13 +84,23 @@
       order by ${orderByClause}
     </if>
   </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from textual_info
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from textual_info
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
   <delete id="deleteByExample" parameterType="com.zhongruan.template.entity.TextualInfoExample">
     delete from textual_info
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.zhongruan.template.entity.TextualInfo">
+  <insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="com.zhongruan.template.entity.TextualInfo">
     insert into textual_info (id, template_id, textual_name, 
       textual_url, created_time, updated_time
       )
@@ -98,7 +108,7 @@
       #{textualUrl,jdbcType=VARCHAR}, #{createdTime,jdbcType=TIMESTAMP}, #{updatedTime,jdbcType=TIMESTAMP}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.zhongruan.template.entity.TextualInfo">
+  <insert id="insertSelective" useGeneratedKeys="true" keyProperty="id" parameterType="com.zhongruan.template.entity.TextualInfo">
     insert into textual_info
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -184,5 +194,35 @@
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zhongruan.template.entity.TextualInfo">
+    update textual_info
+    <set>
+      <if test="templateId != null">
+        template_id = #{templateId,jdbcType=INTEGER},
+      </if>
+      <if test="textualName != null">
+        textual_name = #{textualName,jdbcType=VARCHAR},
+      </if>
+      <if test="textualUrl != null">
+        textual_url = #{textualUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="createdTime != null">
+        created_time = #{createdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedTime != null">
+        updated_time = #{updatedTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zhongruan.template.entity.TextualInfo">
+    update textual_info
+    set template_id = #{templateId,jdbcType=INTEGER},
+      textual_name = #{textualName,jdbcType=VARCHAR},
+      textual_url = #{textualUrl,jdbcType=VARCHAR},
+      created_time = #{createdTime,jdbcType=TIMESTAMP},
+      updated_time = #{updatedTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

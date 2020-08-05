@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.zhongruan.template.dao.IdentifierMappingInfoMapper">
   <resultMap id="BaseResultMap" type="com.zhongruan.template.entity.IdentifierMappingInfo">
-    <result column="id" jdbcType="INTEGER" property="id" />
+    <id column="id" jdbcType="INTEGER" property="id" />
     <result column="template_id" jdbcType="INTEGER" property="templateId" />
     <result column="Identifier_name" jdbcType="VARCHAR" property="identifierName" />
     <result column="sql_context" jdbcType="VARCHAR" property="sqlContext" />
@@ -84,6 +84,16 @@
       order by ${orderByClause}
     </if>
   </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from identifier_mapping_info
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from identifier_mapping_info
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
   <delete id="deleteByExample" parameterType="com.zhongruan.template.entity.IdentifierMappingInfoExample">
     delete from identifier_mapping_info
     <if test="_parameter != null">
@@ -184,5 +194,35 @@
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zhongruan.template.entity.IdentifierMappingInfo">
+    update identifier_mapping_info
+    <set>
+      <if test="templateId != null">
+        template_id = #{templateId,jdbcType=INTEGER},
+      </if>
+      <if test="identifierName != null">
+        Identifier_name = #{identifierName,jdbcType=VARCHAR},
+      </if>
+      <if test="sqlContext != null">
+        sql_context = #{sqlContext,jdbcType=VARCHAR},
+      </if>
+      <if test="createdTime != null">
+        created_time = #{createdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedTime != null">
+        updated_time = #{updatedTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zhongruan.template.entity.IdentifierMappingInfo">
+    update identifier_mapping_info
+    set template_id = #{templateId,jdbcType=INTEGER},
+      Identifier_name = #{identifierName,jdbcType=VARCHAR},
+      sql_context = #{sqlContext,jdbcType=VARCHAR},
+      created_time = #{createdTime,jdbcType=TIMESTAMP},
+      updated_time = #{updatedTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

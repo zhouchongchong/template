@@ -10,13 +10,21 @@ public interface TemplateInfoMapper {
 
     int deleteByExample(TemplateInfoExample example);
 
+    int deleteByPrimaryKey(Integer id);
+
     int insert(TemplateInfo record);
 
     int insertSelective(TemplateInfo record);
 
     List<TemplateInfo> selectByExample(TemplateInfoExample example);
 
+    TemplateInfo selectByPrimaryKey(Integer id);
+
     int updateByExampleSelective(@Param("record") TemplateInfo record, @Param("example") TemplateInfoExample example);
 
     int updateByExample(@Param("record") TemplateInfo record, @Param("example") TemplateInfoExample example);
+
+    int updateByPrimaryKeySelective(TemplateInfo record);
+
+    int updateByPrimaryKey(TemplateInfo record);
 }

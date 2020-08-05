@@ -1,5 +1,7 @@
 package com.zhongruan.template.massage;
 
+import com.alibaba.fastjson.JSONObject;
+
 /**
  *
  */
@@ -123,6 +125,10 @@ public class ResultData {
     }
 
     public void setBody(Object body) {
+        if (body == null){
+            this.body = new JSONObject();
+            return;
+        }
         this.body = body;
     }
 }

@@ -26,8 +26,8 @@ mybatis:
 
 file:
   path:
-    htm: e:/file/htm/
-    html: e:/file/html/
+    htm: F:/work_data/dianwen/public/
+    html: F:/work_data/dianwen/public/
     word: e:/file/word/
     xml: e:/file/xml/
     ftl: e:/file/ftl/

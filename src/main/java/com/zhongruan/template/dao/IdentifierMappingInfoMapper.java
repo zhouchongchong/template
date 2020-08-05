@@ -10,13 +10,21 @@ public interface IdentifierMappingInfoMapper {
 
     int deleteByExample(IdentifierMappingInfoExample example);
 
+    int deleteByPrimaryKey(Integer id);
+
     int insert(IdentifierMappingInfo record);
 
     int insertSelective(IdentifierMappingInfo record);
 
     List<IdentifierMappingInfo> selectByExample(IdentifierMappingInfoExample example);
 
+    IdentifierMappingInfo selectByPrimaryKey(Integer id);
+
     int updateByExampleSelective(@Param("record") IdentifierMappingInfo record, @Param("example") IdentifierMappingInfoExample example);
 
     int updateByExample(@Param("record") IdentifierMappingInfo record, @Param("example") IdentifierMappingInfoExample example);
+
+    int updateByPrimaryKeySelective(IdentifierMappingInfo record);
+
+    int updateByPrimaryKey(IdentifierMappingInfo record);
 }

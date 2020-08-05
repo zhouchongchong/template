@@ -29,29 +29,31 @@ public class DatabaseInfoController {
 	/**
 	 * 列出所有table
 	 */
-	@GetMapping("/listDBSourceTables")
+	@PostMapping("/listDBSourceTables")
 	@ApiOperation(value = "根据是数据源id查询数据库全部表", notes = "查询数据库全部表")
-	@ApiImplicitParams({@ApiImplicitParam(name = "sourceId",required = true)})
-
+	@ApiImplicitParams({@ApiImplicitParam(name = "sourceId",required = true),
+			@ApiImplicitParam(name = "templateId",required = true)})
 	public ResultData listDBSourceTable(@RequestBody JSONObject params) {
 		try {
-			List<DatabaseInfo> databaseInfos = databaseInfoService.findById(params.getInteger("sourceId"));
+			List<DatabaseInfo> databaseInfos = databaseInfoService.findById(params.getInteger("sourceId"),
+					params.getInteger("templateId"));
 			List<String> list = databaseInfoService.listAlltable(databaseInfos.get(0));
 			return ResultData.success(list);
 		} catch (Exception e) {
 			return ResultData.error(e.getMessage());
 		}
 	}
+
 	/**
 	 * 列出所有表的字段
 	 */
-	@GetMapping("/listTableColumn")
+	@PostMapping("/listTableColumn")
 	@ApiOperation(value = "根据表名获取表的字段信息", notes = "根据表名获取表的字段信息")
 	@ApiImplicitParams({@ApiImplicitParam(name = "tableName",required = true),@ApiImplicitParam(name = "sourceId",required = true)})
 
 	public ResultData tableColumn(@RequestBody JSONObject params) {
 		try {
-			List<DatabaseInfo> databaseInfos = databaseInfoService.findById(params.getInteger("sourceId"));
+			List<DatabaseInfo> databaseInfos = databaseInfoService.findById(params.getInteger("sourceId"),0);
 			List<FieldBean> list =databaseInfoService.findTableColumn(params.getString("tableName"),databaseInfos.get(0));
 			return ResultData.success(list);
 		} catch (Exception e) {
@@ -67,7 +69,7 @@ public class DatabaseInfoController {
 	@ApiOperation(value = "查询所有数据源", notes = "查询数据源")
 	public ResultData findAll() {
 		try {
-			List<DatabaseInfo> databaseInfo = databaseInfoService.findById(0);
+			List<DatabaseInfo> databaseInfo = databaseInfoService.findById(0,0);
 			return ResultData.success(databaseInfo);
 		} catch (Exception e) {
 			return ResultData.error(e.getMessage());
@@ -83,7 +85,7 @@ public class DatabaseInfoController {
 			@ApiImplicitParam(name = "id")})
 	public ResultData addDBSource(@RequestBody DatabaseInfo jsonObject) {
 		final ResultData resultData = databaseInfoService.addDBSource(jsonObject);
-		List<DatabaseInfo> databaseInfo = databaseInfoService.findById(0);
+		List<DatabaseInfo> databaseInfo = databaseInfoService.findById(0,0);
 		resultData.setBody(databaseInfo);
 		return resultData;
 	}
@@ -100,7 +102,7 @@ public class DatabaseInfoController {
 	@ApiImplicitParams({@ApiImplicitParam(name = "sourceId",required = true)})
 	public ResultData findById(@RequestBody JSONObject sourceId) {
 		try {
-			List<DatabaseInfo> databaseInfo = databaseInfoService.findById(sourceId.getInteger("sourceId"));
+			List<DatabaseInfo> databaseInfo = databaseInfoService.findById(sourceId.getInteger("sourceId"),0);
 			return ResultData.success(databaseInfo.get(0));
 		} catch (Exception e) {
 			return ResultData.error(e.getMessage());
@@ -129,7 +131,7 @@ public class DatabaseInfoController {
 	@ApiImplicitParams({@ApiImplicitParam(name = "DBSourceId",required = true)})
 	public ResultData deleteDBSource(@RequestBody JSONObject object){
 		final ResultData dbSourceId = databaseInfoService.deleteDBSource(object.getInteger("DBSourceId"));
-		List<DatabaseInfo> databaseInfo = databaseInfoService.findById(0);
+		List<DatabaseInfo> databaseInfo = databaseInfoService.findById(0,0);
 		dbSourceId.setBody(databaseInfo);
 		return dbSourceId;
 	}

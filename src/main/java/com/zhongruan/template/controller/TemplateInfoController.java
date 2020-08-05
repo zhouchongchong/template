@@ -72,4 +72,13 @@ public class TemplateInfoController {
         }
         return ResultData.error("删除模板失败");
     }
+
+    @PostMapping("/html_context")
+    @ApiOperation("通过id获取html内容")
+    @ApiImplicitParams({@ApiImplicitParam(name = "templateId",required = true)})
+    public ResultData getHTMLFileContext(@RequestBody JSONObject params){
+
+        return templateInfoService.getHTMLFileContext(params.getInteger("templateId"));
+    }
+
 }
