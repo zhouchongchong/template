@@ -29,7 +29,7 @@ public class TemplateInfoController {
     }
 
     //通过名称获取模板信息
-    @GetMapping("/findByName")
+    @PostMapping("/findByName")
     @ApiOperation("通过名称获取模板信息")
     @ApiImplicitParams({@ApiImplicitParam(name = "templateName",required = true)})
     public ResultData findByName(@RequestBody JSONObject jsonObject) {

@@ -39,7 +39,7 @@ public class TextualInfoController {
 
 	//通过名称获取电文信息
 	@PostMapping("/findByName")
-	@ApiOperation("获取所有电文信息")
+	@ApiOperation("通过名称获取电文信息")
 	@ApiImplicitParams({@ApiImplicitParam(name = "textualName", required = true)})
 	public ResultData findByName(@RequestBody JSONObject jsonObject) {
 		String textualName = jsonObject.getString("textualName");

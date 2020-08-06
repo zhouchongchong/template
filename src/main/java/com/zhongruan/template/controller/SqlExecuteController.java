@@ -21,11 +21,11 @@ public class SqlExecuteController {
 	@Autowired
 	private SqlExecuteService sqlExecuteService;
 
-	@GetMapping("/sqlQuery")
+	@PostMapping("/sqlQuery")
 	@ApiOperation("通过sql查询")
-	@ApiImplicitParams({@ApiImplicitParam(name = "sql", required = true),
-			@ApiImplicitParam(name = "dbSourceId", required = true)})
-	public ResultData sqlQuery(@RequestBody JSONObject jsonObject) {
+	@ApiImplicitParams({@ApiImplicitParam(name = "sql" ),
+			@ApiImplicitParam(name = "dbSourceId")})
+	public ResultData sqlQuery(@RequestBody(required = false) JSONObject jsonObject) {
 		String sql = jsonObject.getString("sql");
 		Integer dbSourceId = jsonObject.getInteger("dbSourceId");
 		Object ret;
@@ -35,7 +35,7 @@ public class SqlExecuteController {
 			ret = e.getMessage();
 		}
 		return ResultData.success(ret);
-	}
+	} 
 
 
 }

@@ -24,6 +24,8 @@ public class DatabaseInfoController {
 	@Autowired
 	private DatabaseInfoService databaseInfoService;
 
+
+
 	/**
 	 * 列出所有table
 	 */
