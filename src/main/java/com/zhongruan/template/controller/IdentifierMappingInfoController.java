@@ -28,7 +28,7 @@ public class IdentifierMappingInfoController {
 	public ResultData getByInfo(@RequestBody JSONObject params) {
 		IdentifierMappingInfo identifierMappingInfo = identifierMappingInfoService.getByInfo(params.getInteger("templateId"), params.getString("identiferName"));
 		String sql = "";
-		if (identifierMappingInfo != null){
+		if (identifierMappingInfo != null) {
 			sql = identifierMappingInfo.getSqlContext();
 		}
 		return ResultData.success(sql);
@@ -41,9 +41,9 @@ public class IdentifierMappingInfoController {
 	@ApiOperation(value = "新增/更新 X sql ")
 	public ResultData updateSql(@RequestBody IdentifierMappingInfo identifierMappingInfo) {
 		int i = identifierMappingInfoService.updateSql(identifierMappingInfo);
-		if(i==1){
+		if (i == 1) {
 			return ResultData.success(i);
-		}else{
+		} else {
 			return ResultData.error("sql更新失败");
 		}
 

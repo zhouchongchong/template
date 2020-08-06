@@ -10,9 +10,6 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * @author zhenxu.guan
  * @Date 2020/8/3 16:25
@@ -26,14 +23,14 @@ public class SqlExecuteController {
 
 	@GetMapping("/sqlQuery")
 	@ApiOperation("通过sql查询")
-	@ApiImplicitParams({@ApiImplicitParam(name = "sql",required = true),
-			@ApiImplicitParam(name = "dbSourceId",required = true)})
+	@ApiImplicitParams({@ApiImplicitParam(name = "sql", required = true),
+			@ApiImplicitParam(name = "dbSourceId", required = true)})
 	public ResultData sqlQuery(@RequestBody JSONObject jsonObject) {
 		String sql = jsonObject.getString("sql");
 		Integer dbSourceId = jsonObject.getInteger("dbSourceId");
 		Object ret;
 		try {
-			ret = sqlExecuteService.sqlExecute(sql,dbSourceId);
+			ret = sqlExecuteService.sqlExecute(sql, dbSourceId);
 		} catch (Exception e) {
 			ret = e.getMessage();
 		}

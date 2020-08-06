@@ -1,7 +1,9 @@
 package com.zhongruan.template.service;
 
 import com.alibaba.fastjson.JSONObject;
+import com.zhongruan.template.dao.IdentifierMappingInfoMapper;
 import com.zhongruan.template.dao.TemplateInfoMapper;
+import com.zhongruan.template.entity.IdentifierMappingInfoExample;
 import com.zhongruan.template.entity.TemplateInfo;
 import com.zhongruan.template.entity.TemplateInfoExample;
 import com.zhongruan.template.massage.ResultData;
@@ -10,9 +12,6 @@ import com.zhongruan.template.vo.Constant;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
-
-import java.io.File;
 import java.util.List;
 
 /**
@@ -25,6 +24,8 @@ import java.util.List;
 public class TemplateInfoService {
 	@Autowired
 	private TemplateInfoMapper templateInfoMapper;
+	@Autowired
+	private IdentifierMappingInfoMapper identifierMappingInfoMapper;
 
 	public List<TemplateInfo> getAll(){
 		final TemplateInfoExample templateInfoExample = new TemplateInfoExample();
@@ -76,12 +77,20 @@ public class TemplateInfoService {
 			final int delete = templateInfoMapper.deleteByExample(templateInfoExample);
 			if (delete != 1){
 				message = "数据不存在";
+			}else{
+				try {
+					IdentifierMappingInfoExample identifierMappingInfoExample=new IdentifierMappingInfoExample();
+					identifierMappingInfoExample.createCriteria().andTemplateIdEqualTo(templateId);
+					identifierMappingInfoMapper.deleteByExample(identifierMappingInfoExample);
+				}catch (Exception e){
+					log.error("执行 删除 标识符映射表异常：{}",e.getMessage());
+					message = e.getMessage();
+				}
 			}
 		}catch (Exception e){
 			log.error("执行 删除 模板异常：{}",e.getMessage());
 			message = e.getMessage();
 		}
-
 		return ResultData.success(message);
 	}
 }

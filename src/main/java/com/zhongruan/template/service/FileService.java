@@ -7,10 +7,8 @@ import com.zhongruan.template.entity.*;
 import com.zhongruan.template.massage.ResultData;
 import com.zhongruan.template.util.FileUtil;
 import com.zhongruan.template.vo.Constant;
-import freemarker.template.Configuration;
 import freemarker.template.TemplateException;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.tomcat.util.bcel.Const;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.annotation.Transient;
@@ -121,7 +119,7 @@ public class FileService {
 			log.info("zip file path:{},file size:{}", zipFilePath, file.getSize());
 
 			final Map<String, String> unZipMap = FileUtil.unZipFiles(zipFilePath, htm_file_path);
-			if (StringUtils.isEmpty(unZipMap.get(Constant.MAP_KEY_XML))|| StringUtils.isEmpty(unZipMap.get(Constant.MAP_KEY_HTML))) {
+			if (StringUtils.isEmpty(unZipMap.get(Constant.MAP_KEY_XML)) || StringUtils.isEmpty(unZipMap.get(Constant.MAP_KEY_HTML))) {
 				log.error("该zip文件不含有 缺乏必要 文件");
 				return ResultData.error("该zip文件不含有 缺乏必要 文件");
 			}
@@ -133,7 +131,7 @@ public class FileService {
 			String ftlFilePath = ftl_file_path + System.currentTimeMillis() + Constant.SUFF_FTL;
 			final int replaceRet = FileUtil.replaceTxtByStr(unZipMap.get(Constant.MAP_KEY_XML), ftlFilePath, Constant.ASTERISK,
 					Constant.FTL_REPLACE, false, null);
-			if (replaceNum != replaceRet){
+			if (replaceNum != replaceRet) {
 				return ResultData.error("XML 与 HTML 不匹配");
 			}
 			if (replaceRet == 0) {
@@ -178,7 +176,7 @@ public class FileService {
 	}
 
 
-	public ResultData createWord(int templateId,int dbSourceId) {
+	public ResultData createWord(int templateId, int dbSourceId) {
 		log.info("create word template");
 		final IdentifierMappingInfoExample infoExample = new IdentifierMappingInfoExample();
 		infoExample.createCriteria().andTemplateIdEqualTo(templateId);
@@ -192,10 +190,10 @@ public class FileService {
 			if (StringUtils.isEmpty(identifier.getSqlContext()))
 				continue;
 			try {
-				if (dbSourceId == 0){
+				if (dbSourceId == 0) {
 					dbSourceId = templateInfo.getDbSourceId();
 				}
-				final List<Map<String, Object>> list = sqlExecuteService.sqlExecute(identifier.getSqlContext(),dbSourceId);
+				final List<Map<String, Object>> list = sqlExecuteService.sqlExecute(identifier.getSqlContext(), dbSourceId);
 				if (list == null)
 					return ResultData.error("sql 执行出错");
 				final Map<String, Object> map1 = list.get(0);
@@ -213,14 +211,14 @@ public class FileService {
 			}
 		}
 
-		if (StringUtils.isEmpty(templateInfo.getTemplateFtlUrl())){
+		if (StringUtils.isEmpty(templateInfo.getTemplateFtlUrl())) {
 			return ResultData.error("ftl 模板未上传");
 		}
 		wordPath = word_file_path + System.currentTimeMillis() + Constant.SUFF_DOC;
 		try {
-			FileUtil.createWord(templateInfo.getTemplateFtlUrl(),wordPath,map);
-		} catch (IOException |TemplateException e) {
-			log.error("create word error:{}",e.getMessage());
+			FileUtil.createWord(templateInfo.getTemplateFtlUrl(), wordPath, map);
+		} catch (IOException | TemplateException e) {
+			log.error("create word error:{}", e.getMessage());
 			return ResultData.error(e.getMessage());
 		}
 		final TextualInfo textualInfo = new TextualInfo();
@@ -228,7 +226,7 @@ public class FileService {
 		textualInfo.setTextualName(templateInfo.getTemplateName());
 		textualInfo.setTextualUrl(wordPath);
 		textualInfoMapper.insertSelective(textualInfo);
-		log.info("create word success,ftlPath:{}, docPath:{}",templateInfo.getTemplateFtlUrl(),wordPath);
+		log.info("create word success,ftlPath:{}, docPath:{}", templateInfo.getTemplateFtlUrl(), wordPath);
 
 		return ResultData.success(textualInfo);
 	}

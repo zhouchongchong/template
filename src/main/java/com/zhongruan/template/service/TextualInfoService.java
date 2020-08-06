@@ -3,7 +3,7 @@ package com.zhongruan.template.service;
 import com.zhongruan.template.dao.TextualInfoMapper;
 import com.zhongruan.template.entity.TextualInfo;
 import com.zhongruan.template.entity.TextualInfoExample;
-import com.zhongruan.template.entity.TextualInfo;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +15,7 @@ import java.util.List;
  * @Description:
  */
 @Service
+@Slf4j
 public class TextualInfoService {
 
 	@Autowired
@@ -22,6 +23,8 @@ public class TextualInfoService {
 
 	public List<TextualInfo> getAll(){
 		final TextualInfoExample templateInfoExample = new TextualInfoExample();
+		//根据更新时间排序
+		templateInfoExample.setOrderByClause("updated_time");
 		final List<TextualInfo> templateInfos = textualInfoMapper.selectByExample(templateInfoExample);
 		return templateInfos;
 	}
@@ -33,7 +36,7 @@ public class TextualInfoService {
 		try{
 			templateInfos = textualInfoMapper.selectByExample(templateInfoExample);
 		}catch(Exception e){
-
+        log.error("模板信息获取失败");
 		}
 		return templateInfos;
 	}

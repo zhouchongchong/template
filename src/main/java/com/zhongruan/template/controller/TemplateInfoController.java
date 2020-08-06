@@ -1,19 +1,3 @@
-/**
- * @Copyright Beijing Jiangrongxin Technology Co,.Ltd 2020.
- * <p>
- * This material is the property of Beijing Jiangrongxin Technology Co,. Ltd.
- * and the information contained herein is confidential. This material,
- * either in whole or in part, must not be reproduced or disclosed to others
- * or used for purposes other than that for which it has been supplied without
- * Beijing Jiangrongxin's prior written permission,
- * or, if any part hereof is furnished by virtue of contract with a third party,
- * as expressly authorized under that contract.
- * <p>
- * *****************************************************************************
- * Date             Author      Version       Description
- * 2020/8/2         ${Author}  1.0.0         ${DESCRIPTION}
- * *****************************************************************************
- */
 package com.zhongruan.template.controller;
 
 import com.alibaba.fastjson.JSONObject;
@@ -24,12 +8,7 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.File;
 import java.util.List;
 
 /**

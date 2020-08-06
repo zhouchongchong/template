@@ -1,7 +1,6 @@
 
 package com.zhongruan.template.service;
 
-import com.alibaba.fastjson.JSONObject;
 import com.zhongruan.template.dao.DatabaseInfoMapper;
 import com.zhongruan.template.dao.TemplateInfoMapper;
 import com.zhongruan.template.entity.DatabaseInfo;
@@ -10,7 +9,6 @@ import com.zhongruan.template.entity.TemplateInfo;
 import com.zhongruan.template.massage.ResultData;
 import com.zhongruan.template.vo.Constant;
 import com.zhongruan.template.vo.FieldBean;
-import jdk.jfr.events.ExceptionThrownEvent;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,9 +33,9 @@ public class DatabaseInfoService {
 	private TemplateInfoMapper templateInfoMapper;
 
 	//用于获取数据源对象
-	public List<DatabaseInfo> findById(int dbSourceId,int templateId) {
+	public List<DatabaseInfo> findById(int dbSourceId, int templateId) {
 		DatabaseInfoExample databaseInfoExample = new DatabaseInfoExample();
-		if (templateId !=0){
+		if (templateId != 0) {
 			final TemplateInfo templateInfo = new TemplateInfo();
 			templateInfo.setId(templateId);
 			templateInfo.setDbSourceId(dbSourceId);
@@ -246,7 +244,7 @@ public class DatabaseInfoService {
 		return list;
 	}
 
-	public List<FieldBean> findTableColumn(String tableName,DatabaseInfo databaseInfo) throws Exception{
+	public List<FieldBean> findTableColumn(String tableName, DatabaseInfo databaseInfo) throws Exception {
 		List<FieldBean> list = new ArrayList<>();
 		String url = databaseInfo.getDatabaseUrl();
 		String user = databaseInfo.getUsername();
@@ -286,20 +284,20 @@ public class DatabaseInfoService {
 			}
 			dbMetaData = con.getMetaData();
 
-		//获取指定表的ResultSet对象
-		ResultSet resultSet = dbMetaData.getColumns(catalog, null, tableName, null);
+			//获取指定表的ResultSet对象
+			ResultSet resultSet = dbMetaData.getColumns(catalog, null, tableName, null);
 
-		while (resultSet.next()) {
-			FieldBean fieldBean = new FieldBean();
-			//获取字段名称
-			String name = resultSet.getString("COLUMN_NAME");
-			String columnType = resultSet.getString("TYPE_NAME");
+			while (resultSet.next()) {
+				FieldBean fieldBean = new FieldBean();
+				//获取字段名称
+				String name = resultSet.getString("COLUMN_NAME");
+				String columnType = resultSet.getString("TYPE_NAME");
 
-			fieldBean.setFieldName(name);
-			fieldBean.setFieldType(columnType);
-			fieldBean.setFieldDes(resultSet.getString("REMARKS"));
-			list.add(fieldBean);
-	}
+				fieldBean.setFieldName(name);
+				fieldBean.setFieldType(columnType);
+				fieldBean.setFieldDes(resultSet.getString("REMARKS"));
+				list.add(fieldBean);
+			}
 		} catch (SQLException e) {
 			throw new Exception(e.getMessage());
 		} finally {

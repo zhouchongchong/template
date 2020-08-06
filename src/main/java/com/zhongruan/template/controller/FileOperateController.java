@@ -1,11 +1,9 @@
 package com.zhongruan.template.controller;
 
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.zhongruan.template.entity.TextualInfo;
 import com.zhongruan.template.massage.ResultData;
 import com.zhongruan.template.service.FileService;
-import com.zhongruan.template.vo.Constant;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
@@ -14,14 +12,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.net.URLEncoder;
 
 /**
- * @Author: aiying014
+ * @Author: zhou chong
  * Created by 17578 on 17:14 2020/8/2.
  * @Description:
  */
