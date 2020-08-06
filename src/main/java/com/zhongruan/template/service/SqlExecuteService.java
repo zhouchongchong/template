@@ -44,16 +44,8 @@ public class SqlExecuteService {
 		Connection con = null;
 		PreparedStatement ps = null;
 
-
-
-
-
-
-
 		ResultSet result = null;
 		List list = new ArrayList();
-
-
 		try {
 			Class.forName(driverClass);
 			con = DriverManager.getConnection(url, user, pwd);

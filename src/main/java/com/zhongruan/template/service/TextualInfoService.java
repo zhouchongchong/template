@@ -24,7 +24,7 @@ public class TextualInfoService {
 	public List<TextualInfo> getAll(){
 		final TextualInfoExample templateInfoExample = new TextualInfoExample();
 		//根据更新时间排序
-		templateInfoExample.setOrderByClause("updated_time");
+		templateInfoExample.setOrderByClause("updated_time DESC");
 		final List<TextualInfo> templateInfos = textualInfoMapper.selectByExample(templateInfoExample);
 		return templateInfos;
 	}

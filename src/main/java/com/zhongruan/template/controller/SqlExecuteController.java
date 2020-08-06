@@ -35,7 +35,7 @@ public class SqlExecuteController {
 			ret = e.getMessage();
 		}
 		return ResultData.success(ret);
-	} 
+	}
 
 
 }
