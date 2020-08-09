@@ -1,6 +1,6 @@
 package com.zhongruan.template.controller;
 
-import com.alibaba.fastjson.JSON;
+
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.zhongruan.template.entity.IdentifierMappingInfo;
@@ -10,6 +10,7 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -28,22 +29,25 @@ public class IdentifierMappingInfoController {
 	@PostMapping("/findSQL")
 	@ApiImplicitParams({@ApiImplicitParam(name = "templateId", required = true),
 			@ApiImplicitParam(name = "identiferName", required = true)})
-	@ApiOperation(value = "通过获取sql")
+	@ApiOperation(value = "通过模板id和标识符名称获取sql")
 	public ResultData getByInfo(@RequestBody JSONObject params) {
 		IdentifierMappingInfo identifierMappingInfo = identifierMappingInfoService.getByInfo(params.getInteger("templateId"), params.getString("identiferName"));
 		String sql = "";
-		if (identifierMappingInfo != null) {
-			sql = identifierMappingInfo.getSqlContext();
+		if (!StringUtils.isEmpty(identifierMappingInfo)) {
+			if (identifierMappingInfo.getSqlContext()!=null){
+				sql=identifierMappingInfo.getSqlContext();
+			}
 		}
 		return ResultData.success(sql);
-	}
+		}
+
 
 	@PostMapping("/updateSql")
-	@ApiImplicitParams({@ApiImplicitParam(name = "templateId", required = true),
+	@ApiImplicitParams({@ApiImplicitParam(name = "identifierArray", required = true),
 			//数组名称
-			@ApiImplicitParam(name = "identifierArray", required = true),
+			@ApiImplicitParam(name = "templateId", required = true),
 			@ApiImplicitParam(name = "sqlContext", required = true)})
-	@ApiOperation(value = "新增/更新 X sql ")
+	@ApiOperation(value = "新增/更新 X sql")
 	public ResultData updateSql(@RequestBody(required = true) JSONObject jsonObject) {
 		final JSONArray identifierArray = jsonObject.getJSONArray("identifierArray");
 		List<String> identifierList = JSONObject.parseArray(identifierArray.toJSONString(), String.class);

@@ -15,7 +15,6 @@ public class Constant {
 	public static final String MAP_KEY_XML = "xmlKey";
 
 
-
 	public static final String SUCCESS = "success";
 	public static final String FAILED = "failed";
 	public static final String ERROR = "error";
@@ -30,9 +29,11 @@ public class Constant {
 			"  for(var i = 0 ; i < targetA.length; i++) {\n" +
 			"    (function(i){\n" +
 			"      targetA[i].onclick = function() {\n" +
+			"      targetA[i].style.color = 'red'\n" +
 			"        window.parent.a(targetA[i].name)\n" +
 			"      }\n" +
 			"    })(i)\n" +
 			"  }\n" +
 			"</script>";
 }
+

@@ -95,6 +95,7 @@ public class SqlExecuteService {
 
 	//sql测试接口
 	public Map<String, Object> sqlTest(List<String> identifierList, String sql, int dbSourceId) throws Exception {
+		//用于获取数据源
 		DatabaseInfo databaseInfo = databaseInfoService.findById(dbSourceId,0).get(0);
 		String url = databaseInfo.getDatabaseUrl();
 		String user = databaseInfo.getUsername();

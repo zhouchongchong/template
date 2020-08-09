@@ -42,6 +42,7 @@ public class IdentifierMappingInfoService {
 		criteria.andTemplateIdEqualTo(templateId);
 		//将sql拼接标识符名称为查询条件
 		criteria.andIdentifierNameEqualTo(identifierName);
+
 		final List<IdentifierMappingInfo> identifierMappingInfos = identifierMappingInfoMapper.selectByExample(identifierMappingInfoExample);
 		IdentifierMappingInfo identifierMappingInfo = new IdentifierMappingInfo();
 		identifierMappingInfo.setIdentifierName(identifierName);

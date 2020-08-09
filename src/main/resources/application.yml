@@ -26,9 +26,9 @@ mybatis:
 
 file:
   path:
-    htm: F:/work_data/dianwen/public/
-    html: F:/work_data/dianwen/public/
-    word: e:/file/word/
-    xml: e:/file/xml/
-    ftl: e:/file/ftl/
-    zip: e:/file/zip/
+    htm: E:/dianwen/public/
+    html: E:/dianwen/public/
+    word: E:/file/word/
+    xml: E:/file/xml/
+    ftl: E:/file/ftl/
+    zip: E:/file/zip/
