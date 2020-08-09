@@ -131,8 +131,8 @@ public class SqlExecuteService {
 			//获得列数
 			int columnCount = md.getColumnCount();
 			if(identifierList.size()!=columnCount){
-				log.error("标识符下标与sql查询结果不一致");
-				throw new Exception("标识符下标个数与sql查询结果不一致");
+				log.error("sql查询结果与X下标不一致");
+				throw new Exception("sql查询结果与X下标不一致");
 			}
 
 			while (result.next()) {
