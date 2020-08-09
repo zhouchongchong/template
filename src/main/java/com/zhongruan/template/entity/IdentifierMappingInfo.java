@@ -15,6 +15,8 @@ public class IdentifierMappingInfo {
 
     private Date updatedTime;
 
+    private String identifierUnion;
+
     public Integer getId() {
         return id;
     }
@@ -40,7 +42,7 @@ public class IdentifierMappingInfo {
     }
 
     public String getSqlContext() {
-        return sqlContext==null?"":sqlContext;
+        return sqlContext;
     }
 
     public void setSqlContext(String sqlContext) {
@@ -61,5 +63,13 @@ public class IdentifierMappingInfo {
 
     public void setUpdatedTime(Date updatedTime) {
         this.updatedTime = updatedTime;
+    }
+
+    public String getIdentifierUnion() {
+        return identifierUnion;
+    }
+
+    public void setIdentifierUnion(String identifierUnion) {
+        this.identifierUnion = identifierUnion == null ? null : identifierUnion.trim();
     }
 }

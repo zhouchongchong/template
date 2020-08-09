@@ -18,11 +18,14 @@ public class IdentifierMappingInfoService {
 	@Autowired
 	private IdentifierMappingInfoMapper identifierMappingInfoMapper;
 
+	//通过标识符id获取sql
 	public IdentifierMappingInfo getByInfo(int templateId, String identifierName) {
 		IdentifierMappingInfo identifierMappingInfo = null;
 		IdentifierMappingInfoExample identifierMappingInfoExample = new IdentifierMappingInfoExample();
 		IdentifierMappingInfoExample.Criteria criteria = identifierMappingInfoExample.createCriteria();
+		//将sql拼接模板id为查询条件
 		criteria.andTemplateIdEqualTo(templateId);
+		//将标识符名称作为
 		criteria.andIdentifierNameEqualTo(identifierName);
 		List<IdentifierMappingInfo> identifierMappingInfos = identifierMappingInfoMapper.selectByExample(identifierMappingInfoExample);
 		if (identifierMappingInfos.size() == 1) {
@@ -31,16 +34,28 @@ public class IdentifierMappingInfoService {
 		return identifierMappingInfo;
 	}
 
-	public int updateSql(IdentifierMappingInfo identifierMappingInfo) {
+	//新增/更新 X sql
+	public int updateSql(String identifierName, String sqlContext, int templateId, String identifierUnion) {
 		IdentifierMappingInfoExample identifierMappingInfoExample = new IdentifierMappingInfoExample();
 		IdentifierMappingInfoExample.Criteria criteria = identifierMappingInfoExample.createCriteria();
-		criteria.andTemplateIdEqualTo(identifierMappingInfo.getTemplateId());
-		criteria.andIdentifierNameEqualTo(identifierMappingInfo.getIdentifierName());
+		//将sql拼接模板id为查询条件
+		criteria.andTemplateIdEqualTo(templateId);
+		//将sql拼接标识符名称为查询条件
+		criteria.andIdentifierNameEqualTo(identifierName);
 		final List<IdentifierMappingInfo> identifierMappingInfos = identifierMappingInfoMapper.selectByExample(identifierMappingInfoExample);
+		IdentifierMappingInfo identifierMappingInfo = new IdentifierMappingInfo();
+		identifierMappingInfo.setIdentifierName(identifierName);
+		identifierMappingInfo.setSqlContext(sqlContext);
+		identifierMappingInfo.setTemplateId(templateId);
+		identifierMappingInfo.setIdentifierUnion(identifierUnion);
+		//如果没有则新增
+		final int i;
 		if (identifierMappingInfos.size() == 0) {
-			identifierMappingInfoMapper.insertSelective(identifierMappingInfo);
+			i = identifierMappingInfoMapper.insertSelective(identifierMappingInfo);
+			//如果有则更新
+		} else {
+			i = identifierMappingInfoMapper.updateByExampleSelective(identifierMappingInfo, identifierMappingInfoExample);
 		}
-		int i = identifierMappingInfoMapper.updateByExampleSelective(identifierMappingInfo, identifierMappingInfoExample);
 		return i;
 	}
 }

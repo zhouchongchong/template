@@ -112,7 +112,7 @@ public class FileUtil {
 			pathFile.mkdirs();
 		}
 		//解决zip文件中有中文目录或者中文文件
-		ZipFile zip = new ZipFile(zipFile, Charset.forName("UTF-8"));
+		ZipFile zip = new ZipFile(zipFile, Charset.forName("GBK"));
 		for (Enumeration entries = zip.entries(); entries.hasMoreElements(); ) {
 			ZipEntry entry = (ZipEntry) entries.nextElement();
 			String zipEntryName = entry.getName();

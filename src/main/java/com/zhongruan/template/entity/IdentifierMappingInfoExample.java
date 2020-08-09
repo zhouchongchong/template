@@ -226,72 +226,72 @@ public class IdentifierMappingInfoExample {
         }
 
         public Criteria andIdentifierNameIsNull() {
-            addCriterion("Identifier_name is null");
+            addCriterion("identifier_name is null");
             return (Criteria) this;
         }
 
         public Criteria andIdentifierNameIsNotNull() {
-            addCriterion("Identifier_name is not null");
+            addCriterion("identifier_name is not null");
             return (Criteria) this;
         }
 
         public Criteria andIdentifierNameEqualTo(String value) {
-            addCriterion("Identifier_name =", value, "identifierName");
+            addCriterion("identifier_name =", value, "identifierName");
             return (Criteria) this;
         }
 
         public Criteria andIdentifierNameNotEqualTo(String value) {
-            addCriterion("Identifier_name <>", value, "identifierName");
+            addCriterion("identifier_name <>", value, "identifierName");
             return (Criteria) this;
         }
 
         public Criteria andIdentifierNameGreaterThan(String value) {
-            addCriterion("Identifier_name >", value, "identifierName");
+            addCriterion("identifier_name >", value, "identifierName");
             return (Criteria) this;
         }
 
         public Criteria andIdentifierNameGreaterThanOrEqualTo(String value) {
-            addCriterion("Identifier_name >=", value, "identifierName");
+            addCriterion("identifier_name >=", value, "identifierName");
             return (Criteria) this;
         }
 
         public Criteria andIdentifierNameLessThan(String value) {
-            addCriterion("Identifier_name <", value, "identifierName");
+            addCriterion("identifier_name <", value, "identifierName");
             return (Criteria) this;
         }
 
         public Criteria andIdentifierNameLessThanOrEqualTo(String value) {
-            addCriterion("Identifier_name <=", value, "identifierName");
+            addCriterion("identifier_name <=", value, "identifierName");
             return (Criteria) this;
         }
 
         public Criteria andIdentifierNameLike(String value) {
-            addCriterion("Identifier_name like", value, "identifierName");
+            addCriterion("identifier_name like", value, "identifierName");
             return (Criteria) this;
         }
 
         public Criteria andIdentifierNameNotLike(String value) {
-            addCriterion("Identifier_name not like", value, "identifierName");
+            addCriterion("identifier_name not like", value, "identifierName");
             return (Criteria) this;
         }
 
         public Criteria andIdentifierNameIn(List<String> values) {
-            addCriterion("Identifier_name in", values, "identifierName");
+            addCriterion("identifier_name in", values, "identifierName");
             return (Criteria) this;
         }
 
         public Criteria andIdentifierNameNotIn(List<String> values) {
-            addCriterion("Identifier_name not in", values, "identifierName");
+            addCriterion("identifier_name not in", values, "identifierName");
             return (Criteria) this;
         }
 
         public Criteria andIdentifierNameBetween(String value1, String value2) {
-            addCriterion("Identifier_name between", value1, value2, "identifierName");
+            addCriterion("identifier_name between", value1, value2, "identifierName");
             return (Criteria) this;
         }
 
         public Criteria andIdentifierNameNotBetween(String value1, String value2) {
-            addCriterion("Identifier_name not between", value1, value2, "identifierName");
+            addCriterion("identifier_name not between", value1, value2, "identifierName");
             return (Criteria) this;
         }
 
@@ -482,6 +482,76 @@ public class IdentifierMappingInfoExample {
 
         public Criteria andUpdatedTimeNotBetween(Date value1, Date value2) {
             addCriterion("updated_time not between", value1, value2, "updatedTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andIdentifierUnionIsNull() {
+            addCriterion("identifier_union is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIdentifierUnionIsNotNull() {
+            addCriterion("identifier_union is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIdentifierUnionEqualTo(String value) {
+            addCriterion("identifier_union =", value, "identifierUnion");
+            return (Criteria) this;
+        }
+
+        public Criteria andIdentifierUnionNotEqualTo(String value) {
+            addCriterion("identifier_union <>", value, "identifierUnion");
+            return (Criteria) this;
+        }
+
+        public Criteria andIdentifierUnionGreaterThan(String value) {
+            addCriterion("identifier_union >", value, "identifierUnion");
+            return (Criteria) this;
+        }
+
+        public Criteria andIdentifierUnionGreaterThanOrEqualTo(String value) {
+            addCriterion("identifier_union >=", value, "identifierUnion");
+            return (Criteria) this;
+        }
+
+        public Criteria andIdentifierUnionLessThan(String value) {
+            addCriterion("identifier_union <", value, "identifierUnion");
+            return (Criteria) this;
+        }
+
+        public Criteria andIdentifierUnionLessThanOrEqualTo(String value) {
+            addCriterion("identifier_union <=", value, "identifierUnion");
+            return (Criteria) this;
+        }
+
+        public Criteria andIdentifierUnionLike(String value) {
+            addCriterion("identifier_union like", value, "identifierUnion");
+            return (Criteria) this;
+        }
+
+        public Criteria andIdentifierUnionNotLike(String value) {
+            addCriterion("identifier_union not like", value, "identifierUnion");
+            return (Criteria) this;
+        }
+
+        public Criteria andIdentifierUnionIn(List<String> values) {
+            addCriterion("identifier_union in", values, "identifierUnion");
+            return (Criteria) this;
+        }
+
+        public Criteria andIdentifierUnionNotIn(List<String> values) {
+            addCriterion("identifier_union not in", values, "identifierUnion");
+            return (Criteria) this;
+        }
+
+        public Criteria andIdentifierUnionBetween(String value1, String value2) {
+            addCriterion("identifier_union between", value1, value2, "identifierUnion");
+            return (Criteria) this;
+        }
+
+        public Criteria andIdentifierUnionNotBetween(String value1, String value2) {
+            addCriterion("identifier_union not between", value1, value2, "identifierUnion");
             return (Criteria) this;
         }
     }

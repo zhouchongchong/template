@@ -193,18 +193,11 @@ public class FileService {
 				if (dbSourceId == 0) {
 					dbSourceId = templateInfo.getDbSourceId();
 				}
-				final List<Map<String, Object>> list = sqlExecuteService.sqlExecute(identifier.getSqlContext(), dbSourceId);
-				if (list == null)
+				final Map<String, Object> map3 = sqlExecuteService.sqlExecute(identifier.getId(),identifier.getSqlContext(), dbSourceId);
+				if (map3 == null)
 					return ResultData.error("sql 执行出错");
-				final Map<String, Object> map1 = list.get(0);
-				final Set<Map.Entry<String, Object>> entries = map1.entrySet();
-				Object value = null;
-				for (Map.Entry entry : entries) {
-					value = entry.getValue();
-				}
+				final Object value = map3.get(identifier.getIdentifierName());
 				map.put(String.format(Constant.MARK_REPLACE, identifier.getIdentifierName()), value);
-
-
 			} catch (Exception e) {
 				log.info("create word err:{}", e.getMessage());
 				return ResultData.error("sql 执行出错");

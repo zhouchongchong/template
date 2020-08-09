@@ -4,10 +4,11 @@
   <resultMap id="BaseResultMap" type="com.zhongruan.template.entity.IdentifierMappingInfo">
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="template_id" jdbcType="INTEGER" property="templateId" />
-    <result column="Identifier_name" jdbcType="VARCHAR" property="identifierName" />
+    <result column="identifier_name" jdbcType="VARCHAR" property="identifierName" />
     <result column="sql_context" jdbcType="VARCHAR" property="sqlContext" />
     <result column="created_time" jdbcType="TIMESTAMP" property="createdTime" />
     <result column="updated_time" jdbcType="TIMESTAMP" property="updatedTime" />
+    <result column="identifier_union" jdbcType="VARCHAR" property="identifierUnion" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -68,7 +69,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, template_id, Identifier_name, sql_context, created_time, updated_time
+    id, template_id, identifier_name, sql_context, created_time, updated_time, identifier_union
   </sql>
   <select id="selectByExample" parameterType="com.zhongruan.template.entity.IdentifierMappingInfoExample" resultMap="BaseResultMap">
     select
@@ -100,15 +101,15 @@
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="com.zhongruan.template.entity.IdentifierMappingInfo">
-    insert into identifier_mapping_info (id, template_id, Identifier_name, 
-      sql_context, created_time, updated_time
-      )
+  <insert id="insert" parameterType="com.zhongruan.template.entity.IdentifierMappingInfo">
+    insert into identifier_mapping_info (id, template_id, identifier_name, 
+      sql_context, created_time, updated_time, 
+      identifier_union)
     values (#{id,jdbcType=INTEGER}, #{templateId,jdbcType=INTEGER}, #{identifierName,jdbcType=VARCHAR}, 
-      #{sqlContext,jdbcType=VARCHAR}, #{createdTime,jdbcType=TIMESTAMP}, #{updatedTime,jdbcType=TIMESTAMP}
-      )
+      #{sqlContext,jdbcType=VARCHAR}, #{createdTime,jdbcType=TIMESTAMP}, #{updatedTime,jdbcType=TIMESTAMP}, 
+      #{identifierUnion,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" useGeneratedKeys="true" keyProperty="id" parameterType="com.zhongruan.template.entity.IdentifierMappingInfo">
+  <insert id="insertSelective" parameterType="com.zhongruan.template.entity.IdentifierMappingInfo">
     insert into identifier_mapping_info
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -118,7 +119,7 @@
         template_id,
       </if>
       <if test="identifierName != null">
-        Identifier_name,
+        identifier_name,
       </if>
       <if test="sqlContext != null">
         sql_context,
@@ -128,6 +129,9 @@
       </if>
       <if test="updatedTime != null">
         updated_time,
+      </if>
+      <if test="identifierUnion != null">
+        identifier_union,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -149,6 +153,9 @@
       <if test="updatedTime != null">
         #{updatedTime,jdbcType=TIMESTAMP},
       </if>
+      <if test="identifierUnion != null">
+        #{identifierUnion,jdbcType=VARCHAR},
+      </if>
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.zhongruan.template.entity.IdentifierMappingInfoExample" resultType="java.lang.Long">
@@ -167,7 +174,7 @@
         template_id = #{record.templateId,jdbcType=INTEGER},
       </if>
       <if test="record.identifierName != null">
-        Identifier_name = #{record.identifierName,jdbcType=VARCHAR},
+        identifier_name = #{record.identifierName,jdbcType=VARCHAR},
       </if>
       <if test="record.sqlContext != null">
         sql_context = #{record.sqlContext,jdbcType=VARCHAR},
@@ -178,6 +185,9 @@
       <if test="record.updatedTime != null">
         updated_time = #{record.updatedTime,jdbcType=TIMESTAMP},
       </if>
+      <if test="record.identifierUnion != null">
+        identifier_union = #{record.identifierUnion,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -187,10 +197,11 @@
     update identifier_mapping_info
     set id = #{record.id,jdbcType=INTEGER},
       template_id = #{record.templateId,jdbcType=INTEGER},
-      Identifier_name = #{record.identifierName,jdbcType=VARCHAR},
+      identifier_name = #{record.identifierName,jdbcType=VARCHAR},
       sql_context = #{record.sqlContext,jdbcType=VARCHAR},
       created_time = #{record.createdTime,jdbcType=TIMESTAMP},
-      updated_time = #{record.updatedTime,jdbcType=TIMESTAMP}
+      updated_time = #{record.updatedTime,jdbcType=TIMESTAMP},
+      identifier_union = #{record.identifierUnion,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -202,7 +213,7 @@
         template_id = #{templateId,jdbcType=INTEGER},
       </if>
       <if test="identifierName != null">
-        Identifier_name = #{identifierName,jdbcType=VARCHAR},
+        identifier_name = #{identifierName,jdbcType=VARCHAR},
       </if>
       <if test="sqlContext != null">
         sql_context = #{sqlContext,jdbcType=VARCHAR},
@@ -213,16 +224,20 @@
       <if test="updatedTime != null">
         updated_time = #{updatedTime,jdbcType=TIMESTAMP},
       </if>
+      <if test="identifierUnion != null">
+        identifier_union = #{identifierUnion,jdbcType=VARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.zhongruan.template.entity.IdentifierMappingInfo">
     update identifier_mapping_info
     set template_id = #{templateId,jdbcType=INTEGER},
-      Identifier_name = #{identifierName,jdbcType=VARCHAR},
+      identifier_name = #{identifierName,jdbcType=VARCHAR},
       sql_context = #{sqlContext,jdbcType=VARCHAR},
       created_time = #{createdTime,jdbcType=TIMESTAMP},
-      updated_time = #{updatedTime,jdbcType=TIMESTAMP}
+      updated_time = #{updatedTime,jdbcType=TIMESTAMP},
+      identifier_union = #{identifierUnion,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>
