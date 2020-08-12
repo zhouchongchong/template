@@ -131,6 +131,7 @@ public class FileService {
 			String ftlFilePath = ftl_file_path + System.currentTimeMillis() + Constant.SUFF_FTL;
 			final int replaceRet = FileUtil.replaceTxtByStr(unZipMap.get(Constant.MAP_KEY_XML), ftlFilePath, Constant.ASTERISK,
 					Constant.FTL_REPLACE, false, null);
+			log.info("htmlFilepath：{},ftlfilepath:{},htm num:{},ftl num:{}",showHTMLFile,ftlFilePath,replaceNum,replaceRet);
 			if (replaceNum != replaceRet) {
 				return ResultData.error("XML 与 HTML 不匹配");
 			}

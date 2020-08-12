@@ -1,15 +1,12 @@
 package com.zhongruan.template;
 
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.zhongruan.template.entity.DatabaseInfo;
 import com.zhongruan.template.util.FileUtil;
 import com.zhongruan.template.vo.Constant;
 import freemarker.template.TemplateException;
 import org.apache.commons.lang3.StringEscapeUtils;
-import org.apache.logging.log4j.message.StringFormattedMessage;
 import org.junit.Test;
-import sun.reflect.generics.tree.VoidDescriptor;
 
 import java.io.File;
 import java.io.IOException;

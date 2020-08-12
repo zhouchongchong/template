@@ -131,7 +131,7 @@ public class FileUtil {
 			//输出文件路径信息
 			log.info("解压文件路径：{}", outPath);
 			final int indexOf;
-			if ((indexOf = outPath.indexOf(Constant.DOT)) != -1 && (outPath.substring(indexOf + 1).equals("html")
+			if ((indexOf = outPath.lastIndexOf(Constant.DOT)) != -1 && (outPath.substring(indexOf + 1).equals("html")
 					|| outPath.substring(indexOf + 1).equals("htm"))) {
 				htmlFilePath = outPath;
 			} else if (outPath.substring(indexOf + 1).equals("xml")){
@@ -172,6 +172,7 @@ public class FileUtil {
 		try {
 			File file = new File(filePath);
 			File newFile = new File(newFilePath);
+			log.info("replace newfilepath :{}",newFilePath);
 			if (!newFile.getParentFile().exists()) {
 				newFile.getParentFile().mkdirs();
 			}
@@ -207,6 +208,7 @@ public class FileUtil {
 			pw.close();
 		} catch (IOException e) {
 			e.printStackTrace();
+			log.info("replace err:{}",e.getMessage());
 			size_$ = 0;
 		} finally {
 			return size_$;

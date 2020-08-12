@@ -48,10 +48,8 @@
 
 
         <!-- 要生成的表: tableName是数据库中的表名或视图名 domainObjectName是实体类名   生成正删改查-->
-        <table tableName="database_info"></table>
         <table tableName="identifier_mapping_info" ></table>
-        <table tableName="textual_info" ></table>
-        <table tableName="template_info" ></table>
+
         <!-- **-->
     </context>
 </generatorConfiguration>
